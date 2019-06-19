@@ -1,4 +1,4 @@
-# UIKitCatalog: Creating and Customizing Views and Controls
+# UIKit Catalog: Creating and Customizing Views and Controls
 
 Customize your app's user interface by using views and controls in UIKit.
 
@@ -96,8 +96,12 @@ func configureCustomSlider() {
     let rightTrackImage = UIImage(named: "slider_green_track")
     customSlider.setMaximumTrackImage(rightTrackImage, for: .normal)
 
-    let thumbImage = UIImage(named: "slider_thumb")
+    // Set the sliding thumb image (normal and highlighted).
+    let thumbImageConfig = UIImage.SymbolConfiguration(scale: .large)
+    let thumbImage = UIImage(systemName: "circle.fill", withConfiguration: thumbImageConfig)
     customSlider.setThumbImage(thumbImage, for: .normal)
+    let thumbImageHighlighted = UIImage(systemName: "circle", withConfiguration: thumbImageConfig)
+    customSlider.setThumbImage(thumbImageHighlighted, for: .highlighted)
 
     customSlider.minimumValue = 0
     customSlider.maximumValue = 100
@@ -125,16 +129,16 @@ func configureSearchBar() {
     searchBar.showsCancelButton = true
     searchBar.showsBookmarkButton = true
 
-    searchBar.tintColor = UIColor(named: "Tint_Purple_Color")
+    searchBar.tintColor = UIColor.systemPurple
 
     searchBar.backgroundImage = UIImage(named: "search_bar_background")
 
     // Set the bookmark image for both normal and highlighted states.
-    let bookmarkImage = #imageLiteral(resourceName: "bookmark_icon")
-    searchBar.setImage(bookmarkImage, for: .bookmark, state: .normal)
+    let bookImage = UIImage(systemName: "bookmark")
+    searchBar.setImage(bookImage, for: .bookmark, state: .normal)
 
-    let bookmarkHighlightedImage = #imageLiteral(resourceName: "bookmark_icon_highlighted")
-    searchBar.setImage(bookmarkHighlightedImage, for: .bookmark, state: .highlighted)
+    let bookFillImage = UIImage(systemName: "bookmark.fill")
+    searchBar.setImage(bookFillImage, for: .bookmark, state: .highlighted)
 }
 ```
 
@@ -150,10 +154,10 @@ override func viewDidLoad() {
 
     // See the `UIBarStyle` enum for more styles, including `.Default`.
     toolbar.barStyle = .black
-    toolbar.isTranslucent = true
+    toolbar.isTranslucent = false
 
-    toolbar.tintColor = UIColor(named: "Tint_Green_Color")
-    toolbar.backgroundColor = UIColor(named: "Tint_Blue_Color")
+    toolbar.tintColor = UIColor.systemGreen
+    toolbar.backgroundColor = UIColor.systemBlue
 
     let toolbarButtonItems = [
         refreshBarButtonItem,
@@ -194,8 +198,8 @@ func configurePageControl() {
     pageControl.numberOfPages = colors.count
     pageControl.currentPage = 2
 
-    pageControl.pageIndicatorTintColor = UIColor(named: "Tint_Green_Color")
-    pageControl.currentPageIndicatorTintColor = UIColor(named: "Tint_Purple_Color")
+    pageControl.pageIndicatorTintColor = UIColor.systemGreen
+    pageControl.currentPageIndicatorTintColor = UIColor.systemPurple
 
     pageControl.addTarget(self, action: #selector(PageControlViewController.pageControlValueDidChange), for: .valueChanged)
 }

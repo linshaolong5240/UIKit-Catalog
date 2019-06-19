@@ -13,7 +13,8 @@ class SliderViewController: UITableViewController {
     @IBOutlet weak var defaultSlider: UISlider!
     @IBOutlet weak var tintedSlider: UISlider!
     @IBOutlet weak var customSlider: UISlider!
-
+    @IBOutlet weak var minMaxImageSlider: UISlider!
+    
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -22,6 +23,7 @@ class SliderViewController: UITableViewController {
         configureDefaultSlider()
         configureTintedSlider()
         configureCustomSlider()
+        configureMinMaxImageSlider()
     }
 
     // MARK: - Configuration
@@ -36,8 +38,8 @@ class SliderViewController: UITableViewController {
     }
 
     func configureTintedSlider() {
-        tintedSlider.minimumTrackTintColor = UIColor(named: "Tint_Blue_Color")
-        tintedSlider.maximumTrackTintColor = UIColor(named: "Tint_Purple_Color")
+        tintedSlider.minimumTrackTintColor = UIColor.systemBlue
+        tintedSlider.maximumTrackTintColor = UIColor.systemPurple
 
         tintedSlider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
     }
@@ -49,8 +51,12 @@ class SliderViewController: UITableViewController {
         let rightTrackImage = UIImage(named: "slider_green_track")
         customSlider.setMaximumTrackImage(rightTrackImage, for: .normal)
 
-        let thumbImage = UIImage(named: "slider_thumb")
+        // Set the sliding thumb image (normal and highlighted).
+        let thumbImageConfig = UIImage.SymbolConfiguration(scale: .large)
+        let thumbImage = UIImage(systemName: "circle.fill", withConfiguration: thumbImageConfig)
         customSlider.setThumbImage(thumbImage, for: .normal)
+        let thumbImageHighlighted = UIImage(systemName: "circle", withConfiguration: thumbImageConfig)
+        customSlider.setThumbImage(thumbImageHighlighted, for: .highlighted)
 
         customSlider.minimumValue = 0
         customSlider.maximumValue = 100
@@ -58,6 +64,13 @@ class SliderViewController: UITableViewController {
         customSlider.value = 84
 
         customSlider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
+    }
+    
+    func configureMinMaxImageSlider() {
+        minMaxImageSlider.minimumValueImage = UIImage(systemName: "tortoise")
+        minMaxImageSlider.maximumValueImage = UIImage(systemName: "hare")
+        
+        minMaxImageSlider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
     }
     
     // MARK: - Actions

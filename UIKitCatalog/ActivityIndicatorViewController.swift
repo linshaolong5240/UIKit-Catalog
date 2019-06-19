@@ -10,16 +10,18 @@ import UIKit
 class ActivityIndicatorViewController: UITableViewController {
     // MARK: - Properties
 
-    @IBOutlet weak var grayStyleActivityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var defaultSmallActivityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var defaultLargeActivityIndicatorView: UIActivityIndicatorView!
     
-    @IBOutlet weak var tintedActivityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var tintedSmallActivityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var tintedLargeActivityIndicatorView: UIActivityIndicatorView!
     
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureGrayActivityIndicatorView()
+        configureDefaultActivityIndicatorView()
         configureTintedActivityIndicatorView()
         
         // When the activity is done, be sure to use UIActivityIndicatorView.stopAnimating().
@@ -27,19 +29,25 @@ class ActivityIndicatorViewController: UITableViewController {
     
     // MARK: - Configuration
 
-    func configureGrayActivityIndicatorView() {
-        grayStyleActivityIndicatorView.activityIndicatorViewStyle = .gray
+    func configureDefaultActivityIndicatorView() {
+        defaultSmallActivityIndicatorView.style = UIActivityIndicatorView.Style.medium
+        defaultLargeActivityIndicatorView.style = UIActivityIndicatorView.Style.large
         
-        grayStyleActivityIndicatorView.startAnimating()
+        defaultSmallActivityIndicatorView.startAnimating()
+        defaultLargeActivityIndicatorView.startAnimating()
         
-        grayStyleActivityIndicatorView.hidesWhenStopped = true
+        defaultSmallActivityIndicatorView.hidesWhenStopped = true
+        defaultLargeActivityIndicatorView.hidesWhenStopped = true
     }
     
     func configureTintedActivityIndicatorView() {
-        tintedActivityIndicatorView.activityIndicatorViewStyle = .gray
+    	tintedSmallActivityIndicatorView.style = UIActivityIndicatorView.Style.medium
+        tintedLargeActivityIndicatorView.style = UIActivityIndicatorView.Style.large
         
-        tintedActivityIndicatorView.color = UIColor(named: "Tint_Purple_Color")
+        tintedSmallActivityIndicatorView.color = UIColor.systemPurple
+        tintedLargeActivityIndicatorView.color = UIColor.systemPurple
         
-        tintedActivityIndicatorView.startAnimating()
+        tintedSmallActivityIndicatorView.startAnimating()
+        tintedLargeActivityIndicatorView.startAnimating()
     }
 }

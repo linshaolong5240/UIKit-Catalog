@@ -62,9 +62,6 @@ class PickerViewController: UIViewController {
     }
 
     func configurePickerView() {
-        // Show that a given row is selected. This is off by default.
-        pickerView.showsSelectionIndicator = true
-
         // Set the default selected rows (the desired rows to initially select will vary from app to app).
         let selectedRows: [ColorComponent: Int] = [.red: 13, .green: 41, .blue: 24]
 
@@ -115,11 +112,20 @@ extension PickerViewController: UIPickerViewDelegate {
 			blueColorComponent = value
 		}
 		
-		let foregroundColor = UIColor(red: redColorComponent, green: greenColorComponent, blue: blueColorComponent, alpha: 1)
+        if redColorComponent < 0.5 {
+            redColorComponent = 0.5
+        }
+        if blueColorComponent < 0.5 {
+            blueColorComponent = 0.5
+        }
+        if greenColorComponent < 0.5 {
+            greenColorComponent = 0.5
+        }
+		let foregroundColor = UIColor(red: redColorComponent, green: greenColorComponent, blue: blueColorComponent, alpha: 1.0)
 		
 		// Set the foreground color for the entire attributed string.
 		let attributes = [
-			NSAttributedStringKey.foregroundColor: foregroundColor
+			NSAttributedString.Key.foregroundColor: foregroundColor
 		]
 		
 		let title = NSMutableAttributedString(string: "\(Int(colorValue))", attributes: attributes)

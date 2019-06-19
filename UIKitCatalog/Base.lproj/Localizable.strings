@@ -23,12 +23,15 @@ Strings used across the application via the NSLocalizedString API.
 "underlined" = "underlined";
 "tinted" = "tinted";
 "Placeholder text" = "Placeholder text";
+"Enter search text" = "Enter search text";
 "Red color component value" = "Red color component value";
 "Green color component value" = "Green color component value";
 "Blue color component value" = "Blue color component value";
 "Animated images" = "Animated images";
-"Done" = "Done";
-"Search" = "Search";
-"Settings" = "Settings";
+
+"Airplane" = "Airplane";
+"Gift" = "Gift";
+"Burst" = "Burst";
+
 "UIKitCatalog" = "UIKitCatalog";
 "An error occurred:" = "An error occurred:";

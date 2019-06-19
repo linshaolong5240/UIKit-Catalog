@@ -20,13 +20,15 @@ class BaseTableViewController: UITableViewController {
 		navigationController?.delegate = self  // So we can listen when we come and go on the nav stack.
 		
 		detailTargetChange = NotificationCenter.default.addObserver(
-			forName: NSNotification.Name.UIViewControllerShowDetailTargetDidChange,
+			forName: UIViewController.showDetailTargetDidChangeNotification,
 			object: nil,
-			queue: OperationQueue.main) { [unowned self] (_) in
+			queue: OperationQueue.main) { [weak self] (_) in
 				// Whenever the target for showDetailViewController changes, update all of our cells
 				// to ensure they have the right accessory type.
 				//
-				for cell in self.tableView.visibleCells {
+                guard let self = self else { return }
+                
+                for cell in self.tableView.visibleCells {
 					let indexPath = self.tableView.indexPath(for: cell)
 					self.tableView.delegate?.tableView!(self.tableView, willDisplay: cell, forRowAt: indexPath!)
 				}
@@ -37,11 +39,7 @@ class BaseTableViewController: UITableViewController {
 		clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
 		super.viewWillAppear(animated)
 	}
-	
-	deinit {
-		NotificationCenter.default.removeObserver(detailTargetChange)
-	}
-	
+
 	// MARK: Utility functions
 	
 	func configureCell(cell: UITableViewCell, indexPath: IndexPath) {
@@ -77,7 +75,7 @@ class BaseTableViewController: UITableViewController {
 			pushOrPresentViewController(viewController: exampleViewController, cellIndexPath: cellIndexPath)
 		}
 	}
-	
+
 }
 
 // MARK: - UITableViewDelegate

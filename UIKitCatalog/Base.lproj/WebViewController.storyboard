@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="i9U-A8-mkf">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="i9U-A8-mkf">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,12 +24,12 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="2L2-qR-4mQ" firstAttribute="bottom" secondItem="cu4-ZC-P43" secondAttribute="bottom" id="Yzw-MH-mMD"/>
-                            <constraint firstItem="2L2-qR-4mQ" firstAttribute="top" secondItem="cu4-ZC-P43" secondAttribute="top" constant="20" id="klp-F9-Fdi"/>
-                            <constraint firstItem="cu4-ZC-P43" firstAttribute="leading" secondItem="2L2-qR-4mQ" secondAttribute="leading" id="mOa-eb-xkv"/>
-                            <constraint firstItem="2L2-qR-4mQ" firstAttribute="trailing" secondItem="cu4-ZC-P43" secondAttribute="trailing" id="nPH-BV-Pe3"/>
+                            <constraint firstAttribute="bottom" secondItem="cu4-ZC-P43" secondAttribute="bottom" id="Yzw-MH-mMD"/>
+                            <constraint firstAttribute="top" secondItem="cu4-ZC-P43" secondAttribute="top" id="klp-F9-Fdi"/>
+                            <constraint firstItem="cu4-ZC-P43" firstAttribute="leading" secondItem="cde-Ag-lVB" secondAttribute="leading" id="mOa-eb-xkv"/>
+                            <constraint firstAttribute="trailing" secondItem="cu4-ZC-P43" secondAttribute="trailing" id="nPH-BV-Pe3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2L2-qR-4mQ"/>
                     </view>

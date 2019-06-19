@@ -24,8 +24,8 @@ class DefaultSearchBarViewController: UIViewController {
     
     func configureSearchBar() {
         searchBar.showsCancelButton = true
-        searchBar.showsScopeBar = true
-
+		searchBar.showsScopeBar = true
+        
         searchBar.scopeButtonTitles = [
             NSLocalizedString("Scope One", comment: ""),
             NSLocalizedString("Scope Two", comment: "")

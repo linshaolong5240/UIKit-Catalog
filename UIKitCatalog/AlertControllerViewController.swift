@@ -157,7 +157,7 @@ class AlertControllerViewController: UITableViewController {
                 secure entry.
             */
 			self.textDidChangeObserver = NotificationCenter.default.addObserver(
-				forName: NSNotification.Name.UITextFieldTextDidChange,
+				forName: UITextField.textDidChangeNotification,
 				object: textField,
 				queue: OperationQueue.main) { (notification) in
 					if let textField = notification.object as? UITextField {

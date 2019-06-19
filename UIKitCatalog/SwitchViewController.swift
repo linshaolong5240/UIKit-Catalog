@@ -32,9 +32,9 @@ class SwitchViewController: UITableViewController {
     }
 
     func configureTintedSwitch() {
-        tintedSwitch.tintColor = UIColor(named: "Tint_Blue_Color")
-        tintedSwitch.onTintColor = UIColor(named: "Tint_Green_Color")
-        tintedSwitch.thumbTintColor = UIColor(named: "Tint_Purple_Color")
+        tintedSwitch.tintColor = UIColor.systemBlue
+        tintedSwitch.onTintColor = UIColor.systemGreen
+        tintedSwitch.thumbTintColor = UIColor.systemPurple
 
         tintedSwitch.addTarget(self, action: #selector(SwitchViewController.switchValueDidChange(_:)), for: .valueChanged)
     }

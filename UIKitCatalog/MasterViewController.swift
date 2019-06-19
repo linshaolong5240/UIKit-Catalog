@@ -8,7 +8,7 @@ The primary table view controller displaying all the UIKit examples.
 import UIKit
 
 class MasterViewController: BaseTableViewController {
-
+   
 	struct Example {
 		var title: String
 		var subTitle: String
@@ -37,7 +37,12 @@ class MasterViewController: BaseTableViewController {
 		Example(title: "Web View", subTitle: "WebViewController", twoLevel: false)
     ]
 
-	override func isTwoLevelCell(indexPath: IndexPath) -> Bool {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //..
+    }
+
+    override func isTwoLevelCell(indexPath: IndexPath) -> Bool {
 	 	var twoLevelCell = false
 		twoLevelCell = exampleList[indexPath.row].twoLevel
 		return twoLevelCell

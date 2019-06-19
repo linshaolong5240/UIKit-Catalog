@@ -26,16 +26,16 @@ class CustomSearchBarViewController: UIViewController {
         searchBar.showsCancelButton = true
         searchBar.showsBookmarkButton = true
 
-        searchBar.tintColor = UIColor(named: "Tint_Purple_Color")
+        searchBar.tintColor = UIColor.systemPurple
 
         searchBar.backgroundImage = UIImage(named: "search_bar_background")
 
         // Set the bookmark image for both normal and highlighted states.
-        let bookmarkImage = #imageLiteral(resourceName: "bookmark_icon")
-        searchBar.setImage(bookmarkImage, for: .bookmark, state: .normal)
+        let bookImage = UIImage(systemName: "bookmark")
+        searchBar.setImage(bookImage, for: .bookmark, state: .normal)
 
-        let bookmarkHighlightedImage = #imageLiteral(resourceName: "bookmark_icon_highlighted")
-        searchBar.setImage(bookmarkHighlightedImage, for: .bookmark, state: .highlighted)
+        let bookFillImage = UIImage(systemName: "bookmark.fill")
+        searchBar.setImage(bookFillImage, for: .bookmark, state: .highlighted)
     }
 }
 

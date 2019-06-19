@@ -15,15 +15,13 @@ class ButtonViewController: UITableViewController {
     // MARK: - Properties
 
     @IBOutlet weak var systemTextButton: UIButton!
-    
     @IBOutlet weak var systemContactAddButton: UIButton!
-    
     @IBOutlet weak var systemDetailDisclosureButton: UIButton!
-    
     @IBOutlet weak var imageButton: UIButton!
-
     @IBOutlet weak var attributedTextButton: UIButton!
-
+    @IBOutlet weak var symbolButton: UIButton!
+    @IBOutlet weak var symbolTextButton: UIButton!
+    
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -35,6 +33,8 @@ class ButtonViewController: UITableViewController {
         configureSystemDetailDisclosureButton()
         configureImageButton()
         configureAttributedTextSystemButton()
+        configureSymbolButton()
+        configureSymbolTextButton()
     }
 
     // MARK: - Configuration
@@ -65,13 +65,13 @@ class ButtonViewController: UITableViewController {
         // Remove the title text.
         imageButton.setTitle("", for: .normal)
 
-        imageButton.tintColor = UIColor(named: "Tint_Purple_Color")
+        imageButton.tintColor = UIColor.systemPurple
 
         let imageButtonNormalImage = #imageLiteral(resourceName: "x_icon")
 		imageButton.setImage(imageButtonNormalImage, for: .normal)
 
         // Add an accessibility label to the image.
-        imageButton.accessibilityLabel = NSLocalizedString("X Button", comment: "")
+        imageButton.accessibilityLabel = NSLocalizedString("X", comment: "")
 
         imageButton.addTarget(self, action: #selector(ButtonViewController.buttonClicked(_:)), for: .touchUpInside)
     }
@@ -80,23 +80,48 @@ class ButtonViewController: UITableViewController {
         let buttonTitle = NSLocalizedString("Button", comment: "")
         
         // Set the button's title for normal state.
-		let normalTitleAttributes: [NSAttributedStringKey: Any] = [
-                NSAttributedStringKey.foregroundColor: UIColor(named: "Tint_Blue_Color")!,
-                NSAttributedStringKey.strikethroughStyle: NSUnderlineStyle.styleSingle.rawValue
-            ]
+		let normalTitleAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
+            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
+        ]
         
         let normalAttributedTitle = NSAttributedString(string: buttonTitle, attributes: normalTitleAttributes)
         attributedTextButton.setAttributedTitle(normalAttributedTitle, for: .normal)
 
         // Set the button's title for highlighted state.
-        let highlightedTitleAttributes = [
-            NSAttributedStringKey.foregroundColor: UIColor.green,
-            NSAttributedStringKey.strikethroughStyle: NSUnderlineStyle.styleThick.rawValue
-            ] as [NSAttributedStringKey: Any]
+        let highlightedTitleAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.systemGreen,
+            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.thick.rawValue
+        ]
         let highlightedAttributedTitle = NSAttributedString(string: buttonTitle, attributes: highlightedTitleAttributes)
         attributedTextButton.setAttributedTitle(highlightedAttributedTitle, for: .highlighted)
 
         attributedTextButton.addTarget(self, action: #selector(ButtonViewController.buttonClicked(_:)), for: .touchUpInside)
+    }
+    
+    func configureSymbolButton() {
+        let buttonImage = UIImage(systemName: "person")
+        symbolButton.setImage(buttonImage, for: .normal)
+        
+        // Add an accessibility label to the image.
+        symbolButton.accessibilityLabel = NSLocalizedString("Person", comment: "")
+        
+        symbolButton.addTarget(self,
+                               action: #selector(ButtonViewController.buttonClicked(_:)),
+                               for: .touchUpInside)
+    }
+    
+    func configureSymbolTextButton() {
+        let buttonImage = UIImage(systemName: "person")
+        symbolTextButton.setImage(buttonImage, for: .normal)
+        
+        symbolTextButton.addTarget(self,
+                                   action: #selector(ButtonViewController.buttonClicked(_:)),
+                                   for: .touchUpInside)
+        
+        symbolTextButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        let config = UIImage.SymbolConfiguration(textStyle: .body, scale: .small)
+        symbolTextButton.setPreferredSymbolConfiguration(config, forImageIn: .normal)
     }
     
     // MARK: - Actions

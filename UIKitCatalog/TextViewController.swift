@@ -31,12 +31,12 @@ class TextViewController: UIViewController {
 
         notificationCenter.addObserver(self,
                                        selector: #selector(TextViewController.handleKeyboardNotification(_:)),
-                                       name: NSNotification.Name.UIKeyboardWillShow,
+                                       name: UIResponder.keyboardWillShowNotification,
                                        object: nil)
         
         notificationCenter.addObserver(self,
                                        selector: #selector(TextViewController.handleKeyboardNotification(_:)),
-                                       name: NSNotification.Name.UIKeyboardWillHide,
+                                       name: UIResponder.keyboardWillHideNotification,
                                        object: nil)
     }
 
@@ -44,8 +44,8 @@ class TextViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         let notificationCenter = NotificationCenter.default
-        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     // MARK: - Keyboard Event Notifications
@@ -56,18 +56,18 @@ class TextViewController: UIViewController {
 
         // Get the animation duration.
         var animationDuration: TimeInterval = 0
-        if let value = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber {
+        if let value = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber {
            animationDuration = value.doubleValue
         }
 
         // Convert the keyboard frame from screen to view coordinates.
         var keyboardScreenBeginFrame = CGRect()
-        if let value = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue) {
+        if let value = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue) {
             keyboardScreenBeginFrame = value.cgRectValue
         }
         
         var keyboardScreenEndFrame = CGRect()
-        if let value = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue) {
+        if let value = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue) {
             keyboardScreenEndFrame = value.cgRectValue
         }
         
@@ -94,59 +94,106 @@ class TextViewController: UIViewController {
     }
 
     // MARK: - Configuration
-
-    func configureTextView() {
-        let bodyFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: UIFontTextStyle.body)
-        let bodyFont = UIFont(descriptor: bodyFontDescriptor, size: 0)
-            
-        textView.font = bodyFont
-        textView.textColor = UIColor.black
-        textView.backgroundColor = UIColor.white
-        textView.isScrollEnabled = true
-
+    
+    func reflowTextAttributes() {
+        var entireTextColor = UIColor.black
+        
+        // The text should be white in dark mode.
+        if self.view.traitCollection.userInterfaceStyle == .dark {
+            entireTextColor = UIColor.white
+        }
+        let entireAttributedText = NSMutableAttributedString(attributedString: textView.attributedText!)
+        let entireRange = NSRange(location: 0, length: entireAttributedText.length)
+        entireAttributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: entireTextColor, range: entireRange)
+        textView.attributedText = entireAttributedText
+        
         /** Let's modify some of the attributes of the attributed string.
             You can modify these attributes yourself to get a better feel for what they do.
             Note that the initial text is visible in the storyboard.
-        */
+         */
         let attributedText = NSMutableAttributedString(attributedString: textView.attributedText!)
-
+        
         /** Use NSString so the result of rangeOfString is an NSRange, not Range<String.Index>.
             This will then be the correct type to then pass to the addAttribute method of NSMutableAttributedString.
-        */
+         */
         let text = textView.text! as NSString
-
+        
         // Find the range of each element to modify.
         let boldRange = text.range(of: NSLocalizedString("bold", comment: ""))
         let highlightedRange = text.range(of: NSLocalizedString("highlighted", comment: ""))
         let underlinedRange = text.range(of: NSLocalizedString("underlined", comment: ""))
         let tintedRange = text.range(of: NSLocalizedString("tinted", comment: ""))
-
-        /**	Add bold attribute. Take the current font descriptor and create a new font descriptor
-            with an additional bold trait.
-        */
+        
+        /** Add bold attribute. Take the current font descriptor and create a new font descriptor
+         with an additional bold trait.
+         */
         let boldFontDescriptor = textView.font!.fontDescriptor.withSymbolicTraits(.traitBold)
         let boldFont = UIFont(descriptor: boldFontDescriptor!, size: 0)
-        attributedText.addAttribute(NSAttributedStringKey.font, value: boldFont, range: boldRange)
-
-        // Add highlight attribute.
-		attributedText.addAttribute(NSAttributedStringKey.backgroundColor, value: UIColor(named: "Tint_Green_Color")!, range: highlightedRange)
-
-        // Add underline attribute.
-        attributedText.addAttribute(NSAttributedStringKey.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: underlinedRange)
-
-        // Add tint color.
-        attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(named: "Tint_Blue_Color")!, range: tintedRange)
-
-        // Add the image as an attachment.
-        let textAttachment = NSTextAttachment()
-        let image = #imageLiteral(resourceName: "text_view_attachment")
-        textAttachment.image = image
-        textAttachment.bounds = CGRect(origin: CGPoint.zero, size: image.size)
-
-        let textAttachmentString = NSAttributedString(attachment: textAttachment)
-        attributedText.append(textAttachmentString)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: boldFont, range: boldRange)
         
+        // Add highlight attribute.
+        attributedText.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.systemGreen, range: highlightedRange)
+        
+        // Add underline attribute.
+        attributedText.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: underlinedRange)
+        
+        // Add tint color.
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemBlue, range: tintedRange)
+
         textView.attributedText = attributedText
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        // With the background change, we need to re-apply the text attributes.
+        reflowTextAttributes()
+    }
+    
+    func symbolAttributedString(name: String) -> NSAttributedString {
+        let symbolAttachment = NSTextAttachment()
+        if let symbolImage = UIImage(systemName: name)?.withRenderingMode(.alwaysTemplate) {
+            symbolAttachment.image = symbolImage
+        }
+        return NSAttributedString(attachment: symbolAttachment)
+    }
+    
+    func configureTextView() {
+        let bodyFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: UIFont.TextStyle.body)
+        let bodyFont = UIFont(descriptor: bodyFontDescriptor, size: 0)
+            
+        textView.font = bodyFont
+        textView.backgroundColor = UIColor(named: "text_view_background")
+        
+        textView.isScrollEnabled = true
+
+        // Apply different attributes to the text (bold, tinted, underline, etc.).
+        reflowTextAttributes()
+        
+        // Insert symbols as image attachments.
+        let text = textView.text! as NSString
+        let attributedText = NSMutableAttributedString(attributedString: textView.attributedText!)
+        let symbolsSearchRange = text.range(of: NSLocalizedString("symbols", comment: ""))
+        var insertPoint = symbolsSearchRange.location + symbolsSearchRange.length
+        attributedText.insert(symbolAttributedString(name: "heart"), at: insertPoint)
+        insertPoint += 1
+        attributedText.insert(symbolAttributedString(name: "heart.fill"), at: insertPoint)
+        insertPoint += 1
+        attributedText.insert(symbolAttributedString(name: "heart.slash"), at: insertPoint)
+        
+        // Add the image as an attachment.
+        if let image = UIImage(named: "text_view_attachment") {
+            let textAttachment = NSTextAttachment()
+            textAttachment.image = image
+            textAttachment.bounds = CGRect(origin: CGPoint.zero, size: image.size)
+            let textAttachmentString = NSAttributedString(attachment: textAttachment)
+            attributedText.append(textAttachmentString)
+            textView.attributedText = attributedText
+        }
+        
+        /** When turned on, this changes the rendering scale of the text to match the standard text scaling
+            and preserves the original font point sizes when the contents of the text view are copied to the pasteboard.
+            Apps that show a lot of text content, such as a text viewer or editor, should turn this on and use the standard text scaling.
+         */
+        textView.usesStandardTextScaling = true
     }
 
     // MARK: - Actions

@@ -19,10 +19,10 @@ class TintedToolbarViewController: UIViewController {
 
         // See the `UIBarStyle` enum for more styles, including `.Default`.
         toolbar.barStyle = .black
-        toolbar.isTranslucent = true
+        toolbar.isTranslucent = false
 		
-        toolbar.tintColor = UIColor(named: "Tint_Green_Color")
-        toolbar.backgroundColor = UIColor(named: "Tint_Blue_Color")
+        toolbar.tintColor = UIColor.systemGreen
+        toolbar.backgroundColor = UIColor.systemBlue
 		
         let toolbarButtonItems = [
             refreshBarButtonItem,
@@ -50,13 +50,27 @@ class TintedToolbarViewController: UIViewController {
     var actionBarButtonItem: UIBarButtonItem {
         return UIBarButtonItem(barButtonSystemItem: .action,
                                target: self,
-                               action: #selector(TintedToolbarViewController.barButtonItemClicked(_:)))
+                               action: #selector(TintedToolbarViewController.actionBarButtonItemClicked(_:)))
     }
 
     // MARK: - Actions
 
     @objc
     func barButtonItemClicked(_ barButtonItem: UIBarButtonItem) {
-        print("A bar button item on the tinted toolbar was clicked: \(barButtonItem).")
+        Swift.debugPrint("A bar button item on the tinted toolbar was clicked: \(barButtonItem).")
     }
+    
+    @objc
+    func actionBarButtonItemClicked(_ barButtonItem: UIBarButtonItem) {
+        if let image = UIImage(named: "Flowers_1") {
+            let activityItems = ["Shared piece of text", image] as [Any]
+            
+            let activityViewController =
+                UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+
+            activityViewController.popoverPresentationController?.barButtonItem = barButtonItem
+            present(activityViewController, animated: true, completion: nil)
+        }
+    }
+    
 }

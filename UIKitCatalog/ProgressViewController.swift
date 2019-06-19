@@ -102,8 +102,8 @@ class ProgressViewController: UITableViewController {
     func configureTintedProgressView() {
         tintedProgressView.progressViewStyle = .default
 
-        tintedProgressView.trackTintColor = UIColor(named: "Tint_Blue_Color")
-        tintedProgressView.progressTintColor = UIColor(named: "Tint_Purple_Color")
+        tintedProgressView.trackTintColor = UIColor.systemBlue
+        tintedProgressView.progressTintColor = UIColor.systemPurple
     }
 
 }

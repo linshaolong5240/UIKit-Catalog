@@ -31,14 +31,14 @@ class CustomToolbarViewController: UIViewController {
     // MARK: - UIBarButtonItem Creation and Configuration
 
     var customImageBarButtonItem: UIBarButtonItem {
-        let customBarButtonItemImage = #imageLiteral(resourceName: "tools_icon")
+        let customBarButtonItemImage = UIImage(systemName: "exclamationmark.triangle")
 
         let customImageBarButtonItem = UIBarButtonItem(image: customBarButtonItemImage,
                                                        style: .plain,
                                                        target: self,
                                                        action: #selector(CustomToolbarViewController.barButtonItemClicked(_:)))
 
-        customImageBarButtonItem.tintColor = UIColor(named: "Tint_Purple_Color")
+        customImageBarButtonItem.tintColor = UIColor.systemPurple
 
         return customImageBarButtonItem
     }
@@ -52,10 +52,10 @@ class CustomToolbarViewController: UIViewController {
         let barButtonItem = UIBarButtonItem(title: NSLocalizedString("Button", comment: ""),
                                             style: .plain,
                                             target: self,
-                                            action: #selector(CustomToolbarViewController.barButtonItemClicked(_:)))
+                                            action: #selector(CustomToolbarViewController.barButtonItemClicked))
 
         let attributes = [
-            NSAttributedStringKey.foregroundColor: UIColor(named: "Tint_Purple_Color")!
+            NSAttributedString.Key.foregroundColor: UIColor.systemPurple
         ]
         barButtonItem.setTitleTextAttributes(attributes, for: .normal)
 
@@ -68,4 +68,5 @@ class CustomToolbarViewController: UIViewController {
     func barButtonItemClicked(_ barButtonItem: UIBarButtonItem) {
         print("A bar button item on the custom toolbar was clicked: \(barButtonItem).")
     }
+
 }

@@ -11,11 +11,8 @@ class SegmentedControlViewController: UITableViewController {
     // MARK: - Properties
 
     @IBOutlet weak var defaultSegmentedControl: UISegmentedControl!
-    
     @IBOutlet weak var tintedSegmentedControl: UISegmentedControl!
-    
     @IBOutlet weak var customSegmentsSegmentedControl: UISegmentedControl!
-    
     @IBOutlet weak var customBackgroundSegmentedControl: UISegmentedControl!
 
     // MARK: - View Life Cycle
@@ -32,41 +29,34 @@ class SegmentedControlViewController: UITableViewController {
     // MARK: - Configuration
 
     func configureDefaultSegmentedControl() {
-
+        // As a demonstration, disable the first segment.
         defaultSegmentedControl.setEnabled(false, forSegmentAt: 0)
 
         defaultSegmentedControl.addTarget(self, action: #selector(SegmentedControlViewController.selectedSegmentDidChange(_:)), for: .valueChanged)
     }
 
     func configureTintedSegmentedControl() {
-        tintedSegmentedControl.tintColor = UIColor(named: "Tint_Blue_Color")
+        // Use a dynamic tinted color (separate one for Light Appearance and separate one for Dark Appearance).
+        tintedSegmentedControl.tintColor = UIColor(named: "tinted_segmented_control")!
 
         tintedSegmentedControl.selectedSegmentIndex = 1
 
         tintedSegmentedControl.addTarget(self, action: #selector(SegmentedControlViewController.selectedSegmentDidChange(_:)), for: .valueChanged)
     }
-
+    
     func configureCustomSegmentsSegmentedControl() {
-        let imageToAccessibilityLabelMappings = [
-            "checkmark_icon": NSLocalizedString("Done", comment: ""),
-            "search_icon": NSLocalizedString("Search", comment: ""),
-            "tools_icon": NSLocalizedString("Settings", comment: "")
-        ]
-
-        // Guarantee that the segments show up in the same order.
-        var sortedSegmentImageNames = Array(imageToAccessibilityLabelMappings.keys)
-        sortedSegmentImageNames.sort { lhs, rhs in
-            return lhs.localizedStandardCompare(rhs) == ComparisonResult.orderedAscending
-        }
-
-        for (idx, segmentImageName) in sortedSegmentImageNames.enumerated() {
-            let image = UIImage(named: segmentImageName)!
-
-            image.accessibilityLabel = imageToAccessibilityLabelMappings[segmentImageName]
-
-            customSegmentsSegmentedControl.setImage(image, forSegmentAt: idx)
-        }
-
+        let airplaneImage = UIImage(systemName: "airplane")
+        airplaneImage?.accessibilityLabel = NSLocalizedString("Airplane", comment: "")
+        customSegmentsSegmentedControl.setImage(airplaneImage, forSegmentAt: 0)
+        
+        let giftImage = UIImage(systemName: "gift")
+        giftImage?.accessibilityLabel = NSLocalizedString("Gift", comment: "")
+        customSegmentsSegmentedControl.setImage(giftImage, forSegmentAt: 1)
+        
+        let burstImage = UIImage(systemName: "burst")
+        burstImage?.accessibilityLabel = NSLocalizedString("Burst", comment: "")
+        customSegmentsSegmentedControl.setImage(burstImage, forSegmentAt: 2)
+        
         customSegmentsSegmentedControl.selectedSegmentIndex = 0
 
         customSegmentsSegmentedControl.addTarget(self,
@@ -99,14 +89,14 @@ class SegmentedControlViewController: UITableViewController {
         let font = UIFont(descriptor: captionFontDescriptor, size: 0)
 
         let normalTextAttributes = [
-            NSAttributedStringKey.foregroundColor: UIColor(named: "Tint_Purple_Color")!,
-            NSAttributedStringKey.font: font
+            NSAttributedString.Key.foregroundColor: UIColor.systemPurple,
+            NSAttributedString.Key.font: font
         ]
         customBackgroundSegmentedControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
 
         let highlightedTextAttributes = [
-            NSAttributedStringKey.foregroundColor: UIColor(named: "Tint_Green_Color")!,
-            NSAttributedStringKey.font: font
+            NSAttributedString.Key.foregroundColor: UIColor.systemGreen,
+            NSAttributedString.Key.font: font
         ]
         customBackgroundSegmentedControl.setTitleTextAttributes(highlightedTextAttributes, for: .highlighted)
 

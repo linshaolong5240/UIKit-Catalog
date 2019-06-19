@@ -17,15 +17,15 @@ class PageControlViewController: UIViewController {
     // Colors that correspond to the selected page. Used as the background color for `colorView`.
     let colors = [
         UIColor.black,
-        UIColor.gray,
-        UIColor.red,
-        UIColor.green,
-        UIColor.blue,
-        UIColor.cyan,
-        UIColor.yellow,
-        UIColor.magenta,
-        UIColor.orange,
-        UIColor.purple
+        UIColor.systemGray,
+        UIColor.systemRed,
+        UIColor.systemGreen,
+        UIColor.systemBlue,
+        UIColor.systemPink,
+        UIColor.systemYellow,
+        UIColor.systemIndigo,
+        UIColor.systemOrange,
+        UIColor.systemPurple
     ]
 
     // MARK: - View Life Cycle
@@ -44,8 +44,8 @@ class PageControlViewController: UIViewController {
         pageControl.numberOfPages = colors.count
         pageControl.currentPage = 2
 
-        pageControl.pageIndicatorTintColor = UIColor(named: "Tint_Green_Color")
-        pageControl.currentPageIndicatorTintColor = UIColor(named: "Tint_Purple_Color")
+        pageControl.pageIndicatorTintColor = UIColor.systemGreen
+        pageControl.currentPageIndicatorTintColor = UIColor.systemPurple
 
         pageControl.addTarget(self, action: #selector(PageControlViewController.pageControlValueDidChange), for: .valueChanged)
     }
