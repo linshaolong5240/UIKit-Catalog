@@ -17,7 +17,7 @@
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cu4-ZC-P43">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
@@ -26,10 +26,10 @@
                         </subviews>
                         <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="cu4-ZC-P43" secondAttribute="bottom" id="Yzw-MH-mMD"/>
-                            <constraint firstAttribute="top" secondItem="cu4-ZC-P43" secondAttribute="top" id="klp-F9-Fdi"/>
-                            <constraint firstItem="cu4-ZC-P43" firstAttribute="leading" secondItem="cde-Ag-lVB" secondAttribute="leading" id="mOa-eb-xkv"/>
-                            <constraint firstAttribute="trailing" secondItem="cu4-ZC-P43" secondAttribute="trailing" id="nPH-BV-Pe3"/>
+                            <constraint firstItem="cu4-ZC-P43" firstAttribute="leading" secondItem="2L2-qR-4mQ" secondAttribute="leading" id="38U-tt-Pxa"/>
+                            <constraint firstItem="2L2-qR-4mQ" firstAttribute="bottom" secondItem="cu4-ZC-P43" secondAttribute="bottom" id="Ee1-kG-Bbh"/>
+                            <constraint firstItem="2L2-qR-4mQ" firstAttribute="trailing" secondItem="cu4-ZC-P43" secondAttribute="trailing" id="Mqf-0F-mfm"/>
+                            <constraint firstItem="cu4-ZC-P43" firstAttribute="top" secondItem="2L2-qR-4mQ" secondAttribute="top" id="d1U-7W-j7C"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2L2-qR-4mQ"/>
                     </view>
