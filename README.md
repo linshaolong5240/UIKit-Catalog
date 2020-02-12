@@ -1,10 +1,10 @@
 # UIKit Catalog: Creating and Customizing Views and Controls
 
-Customize the user interface of your iOS and Mac Catalyst apps by using views and controls in UIKit.
+Customize the user interface of your iOS apps and Mac apps built with Mac Catalyst by using views and controls in UIKit.
 
 ## Overview
 
-This sample guides you through several types of customizations that you can apply in your iOS and Mac Catalyst apps. The sample uses a split view controller architecture for navigating UIKit views and controls. The primary view controller (`MasterViewController`) shows the available views and controls. Selecting one shows the secondary view controller associated with it.
+This sample guides you through several types of customizations that you can apply in your iOS apps and Mac apps built using Mac Catalyst. The sample uses a split view controller architecture for navigating UIKit views and controls. The primary view controller (`MasterViewController`) shows the available views and controls. Selecting one shows the secondary view controller associated with it.
 
 The name of each secondary view controller reflects its *target item*. For example, the `AlertControllerViewController` class shows how to use a `UIAlertController` object. The only exceptions to this rule are `UISearchBar` and `UIToolbar`; the sample demonstrates these APIs in multiple view controllers to explain how their controls function and how to customize them. To demonstrate how to manage the complexity of your storyboards, all view controllers are hosted in a separate storyboard and loaded when needed.
 

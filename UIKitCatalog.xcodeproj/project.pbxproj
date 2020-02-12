@@ -106,7 +106,6 @@
 		539C6BAB1F27F4980006C5A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		539C6BAD1F27F4980006C5A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WebViewController.storyboard; sourceTree = "<group>"; };
 		539C6BB11F27F4A70006C5A9 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		53A0E92053A0B87000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.txt; sourceTree = "<group>"; };
 		53B791D51F854B4700AB2FA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/content.html; sourceTree = "<group>"; };
 		53B791D71F854B4700AB2FA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53B791D91F854B4800AB2FA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -122,7 +121,8 @@
 		53CE5AF71F2A8BD000D8A656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SwitchViewController.storyboard; sourceTree = "<group>"; };
 		53CE5AFA1F2A8BEB00D8A656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TextFieldViewController.storyboard; sourceTree = "<group>"; };
 		53DDE73C22776382000006CF /* UIKitCatalog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UIKitCatalog.entitlements; sourceTree = "<group>"; };
-		53F9F3B053F9F4A000000001 /* SampleCode.xcconfig */ = {isa = PBXFileReference; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
+		64D8CD77C30F3CED2D55B8F2 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.txt; sourceTree = "<group>"; };
+		8A04EFECD9880EE89ADA2FE8 /* SampleCode.xcconfig */ = {isa = PBXFileReference; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		B50F41071B1D284700E5147D /* StackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +138,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16BE5A8EA8411C7808E4CA84 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				8A04EFECD9880EE89ADA2FE8 /* SampleCode.xcconfig */,
+			);
+			name = Configuration;
+			sourceTree = "<group>";
+		};
 		228DB9EA18BC53F1002BA12A = {
 			isa = PBXGroup;
 			children = (
@@ -145,8 +153,8 @@
 				228DB9F518BC53F1002BA12A /* UIKitCatalog */,
 				228DB9F418BC53F1002BA12A /* Products */,
 				53654E212298881100B999C7 /* Frameworks */,
-				53F9F60053F9F90000000001 /* Configuration */,
-				5600C4205600C74000000001 /* LICENSE */,
+				16BE5A8EA8411C7808E4CA84 /* Configuration */,
+				D9361AEE59ED9397893793F6 /* LICENSE */,
 			);
 			sourceTree = "<group>";
 		};
@@ -276,18 +284,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		53F9F60053F9F90000000001 /* Configuration */ = {
+		D9361AEE59ED9397893793F6 /* LICENSE */ = {
 			isa = PBXGroup;
 			children = (
-				53F9F3B053F9F4A000000001 /* SampleCode.xcconfig */,
-			);
-			name = Configuration;
-			sourceTree = "<group>";
-		};
-		5600C4205600C74000000001 /* LICENSE */ = {
-			isa = PBXGroup;
-			children = (
-				53A0E92053A0B87000000001 /* LICENSE.txt */,
+				64D8CD77C30F3CED2D55B8F2 /* LICENSE.txt */,
 			);
 			name = LICENSE;
 			path = LICENSE;
@@ -303,7 +303,6 @@
 				228DB9EF18BC53F1002BA12A /* Sources */,
 				228DB9F018BC53F1002BA12A /* Frameworks */,
 				228DB9F118BC53F1002BA12A /* Resources */,
-				FB440340FB430B8000000001,
 			);
 			buildRules = (
 			);
@@ -618,7 +617,7 @@
 /* Begin XCBuildConfiguration section */
 		228DBA0918BC53F1002BA12A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53F9F3B053F9F4A000000001 /* SampleCode.xcconfig */;
+			baseConfigurationReference = 8A04EFECD9880EE89ADA2FE8 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -674,7 +673,7 @@
 		};
 		228DBA0A18BC53F1002BA12A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53F9F3B053F9F4A000000001 /* SampleCode.xcconfig */;
+			baseConfigurationReference = 8A04EFECD9880EE89ADA2FE8 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -723,12 +722,11 @@
 		};
 		228DBA0C18BC53F1002BA12A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53F9F3B053F9F4A000000001 /* SampleCode.xcconfig */;
+			baseConfigurationReference = 8A04EFECD9880EE89ADA2FE8 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = UIKitCatalog/UIKitCatalog.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/UIKitCatalog/UIKitCatalog-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -745,12 +743,11 @@
 		};
 		228DBA0D18BC53F1002BA12A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53F9F3B053F9F4A000000001 /* SampleCode.xcconfig */;
+			baseConfigurationReference = 8A04EFECD9880EE89ADA2FE8 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = UIKitCatalog/UIKitCatalog.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/UIKitCatalog/UIKitCatalog-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
