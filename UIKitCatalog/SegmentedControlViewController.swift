@@ -14,7 +14,8 @@ class SegmentedControlViewController: UITableViewController {
     @IBOutlet weak var tintedSegmentedControl: UISegmentedControl!
     @IBOutlet weak var customSegmentsSegmentedControl: UISegmentedControl!
     @IBOutlet weak var customBackgroundSegmentedControl: UISegmentedControl!
-
+    @IBOutlet weak var actionBasedSegmentedControl: UISegmentedControl!
+    
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -24,6 +25,7 @@ class SegmentedControlViewController: UITableViewController {
         configureTintedSegmentedControl()
         configureCustomSegmentsSegmentedControl()
         configureCustomBackgroundSegmentedControl()
+        configureActionBasedSegmentedControl()
     }
 
     // MARK: - Configuration
@@ -37,7 +39,7 @@ class SegmentedControlViewController: UITableViewController {
 
     func configureTintedSegmentedControl() {
         // Use a dynamic tinted color (separate one for Light Appearance and separate one for Dark Appearance).
-        tintedSegmentedControl.tintColor = UIColor(named: "tinted_segmented_control")!
+        tintedSegmentedControl.selectedSegmentTintColor = UIColor(named: "tinted_segmented_control")!
 
         tintedSegmentedControl.selectedSegmentIndex = 1
 
@@ -105,6 +107,25 @@ class SegmentedControlViewController: UITableViewController {
                                                    for: .valueChanged)
     }
 
+    func configureActionBasedSegmentedControl() {
+        actionBasedSegmentedControl.selectedSegmentIndex = 0
+        let firstAction =
+            UIAction(title: NSLocalizedString("CheckTitle", comment: "")) { action in
+                Swift.debugPrint("Segment Action '\(action.title)'")
+            }
+        actionBasedSegmentedControl.setAction(firstAction, forSegmentAt: 0)
+        let secondAction =
+            UIAction(title: NSLocalizedString("SearchTitle", comment: "")) { action in
+                Swift.debugPrint("Segment Action '\(action.title)'")
+            }
+        actionBasedSegmentedControl.setAction(secondAction, forSegmentAt: 1)
+        let thirdAction =
+            UIAction(title: NSLocalizedString("ToolsTitle", comment: "")) { action in
+                Swift.debugPrint("Segment Action '\(action.title)'")
+            }
+        actionBasedSegmentedControl.setAction(thirdAction, forSegmentAt: 2)
+    }
+        
     // MARK: - Actions
 
     @objc

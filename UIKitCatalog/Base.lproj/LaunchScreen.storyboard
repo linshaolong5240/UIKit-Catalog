@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4yX-ry-qSy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4yX-ry-qSy">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,17 +23,17 @@
             </objects>
             <point key="canvasLocation" x="-351" y="313"/>
         </scene>
-        <!--UIKitCatalog-->
+        <!--View Controller-->
         <scene sceneID="OE7-kf-oQR">
             <objects>
                 <viewController id="Axx-hg-9Xm" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bd8-dr-7ve">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="m5c-PM-dSX"/>
                     </view>
-                    <navigationItem key="navigationItem" title="UIKitCatalog" id="uDS-kc-Hwh"/>
+                    <navigationItem key="navigationItem" id="uDS-kc-Hwh"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cS5-YB-Lx5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -43,6 +43,9 @@ class DatePickerController: UIViewController {
         let now = Date()
         datePicker.minimumDate = now
 
+        // Decide the best date picker style based on the trait collection's vertical size.
+        datePicker.preferredDatePickerStyle = traitCollection.verticalSizeClass == .compact ? .compact : .inline
+        
         var dateComponents = DateComponents()
         dateComponents.day = 7
 
@@ -56,10 +59,18 @@ class DatePickerController: UIViewController {
         updateDatePickerLabel()
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        // Adjust the date picker style due to the trait collection's vertical size.
+        super.traitCollectionDidChange(previousTraitCollection)
+        datePicker.preferredDatePickerStyle = traitCollection.verticalSizeClass == .compact ? .compact : .inline
+    }
+    
     // MARK: - Actions
 
     @objc
     func updateDatePickerLabel() {
         dateLabel.text = dateFormatter.string(from: datePicker.date)
+        
+        Swift.debugPrint("Chosen date: \(dateFormatter.string(from: datePicker.date))")
     }
 }

@@ -1,12 +1,12 @@
 # UIKit Catalog: Creating and Customizing Views and Controls
 
-Customize the user interface of your iOS apps and Mac apps built with Mac Catalyst by using views and controls in UIKit.
+Customize your app's user interface with views and controls in UIKit.
 
 ## Overview
 
-This sample guides you through several types of customizations that you can apply in your iOS apps and Mac apps built using Mac Catalyst. The sample uses a split view controller architecture for navigating UIKit views and controls. The primary view controller (`MasterViewController`) shows the available views and controls. Selecting one shows the secondary view controller associated with it.
+This sample guides you through several types of customizations that you can make in your iOS app. The sample uses a split view controller architecture for navigating UIKit views and controls. The primary view controller (`MasterViewController`) shows the available views and controls. Selecting one shows the secondary view controller associated with it.
 
-The name of each secondary view controller reflects its *target item*. For example, the `AlertControllerViewController` class shows how to use a `UIAlertController` object. The only exceptions to this rule are `UISearchBar` and `UIToolbar`; the sample demonstrates these APIs in multiple view controllers to explain how their controls function and how to customize them. To demonstrate how to manage the complexity of your storyboards, all view controllers are hosted in a separate storyboard and loaded when needed.
+The name of each secondary view controller reflects its *target item*. For example, the `AlertControllerViewController` class shows how to use a `UIAlertController` object. The only exceptions to this rule are `UISearchBar` and `UIToolbar`; the sample demonstrates these APIs in multiple view controllers to explain how their controls function and how to customize them. To demonstrate how to manage the complexity of your storyboards, the app hosts all view controllers in a separate storyboard and loaded when needed.
 
 This sample demonstrates the following views and controls (several of which are referenced in the sections below):
 
@@ -14,9 +14,12 @@ This sample demonstrates the following views and controls (several of which are 
 * [`UIAlertController`](https://developer.apple.com/documentation/uikit/uialertcontroller)
 * [`UIButton`](https://developer.apple.com/documentation/uikit/uibutton)
 * [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker)
+* [`UIPickerView`](https://developer.apple.com/documentation/uikit/uipickerview)
+* [`UIColorPickerViewController`](https://developer.apple.com/documentation/uikit/uicolorpickerviewcontroller)
+* [`UIFontPickerViewController`](https://developer.apple.com/documentation/uikit/uifontpickerviewcontroller)
+* [`UIImagePickerViewController`](https://developer.apple.com/documentation/uikit/uiimagepickercontroller)
 * [`UIImageView`](https://developer.apple.com/documentation/uikit/uiimageview)
 * [`UIPageControl`](https://developer.apple.com/documentation/uikit/uipagecontrol)
-* [`UIPickerView`](https://developer.apple.com/documentation/uikit/uipickerview)
 * [`UIProgressView`](https://developer.apple.com/documentation/uikit/uiprogressview)
 * [`UISearchBar`](https://developer.apple.com/documentation/uikit/uisearchbar)
 * [`UISegmentedControl`](https://developer.apple.com/documentation/uikit/uisegmentedcontrol)
@@ -60,7 +63,7 @@ func pickerView(_ pickerView: UIPickerView, accessibilityLabelForComponent compo
 3. Add handlers for actions that the user may take.
 4. Present the alert controller.
 
-The `showSimpleAlert` function uses the `NSLocalizedString` function to retrieve the alert messages in the user’s preferred language. This function uses those strings to create and configure the `UIAlertController` object. Although the button in the alert has the title OK, the sample uses a cancel action to ensure that the alert controller applies the proper styling to the button:
+The `showSimpleAlert` function uses the `NSLocalizedString` function to retrieve the alert messages in the user’s preferred language. The `showSimpleAlert` function uses those strings to create and configure the `UIAlertController` object. Although the button in the alert has the title OK, the sample uses a cancel action to ensure that the alert controller applies the proper styling to the button:
 
 ``` swift
 func showSimpleAlert() {
@@ -84,7 +87,7 @@ func showSimpleAlert() {
 
 ## Customize the Appearance of Sliders
 
-This sample demonstrates different ways to display a `UISlider`, a control used to select a single value from a continuous range of values. You customize the appearance of a slider by assigning stretchable images for left-side tracking, right-side tracking, and the thumb. In this example, the track image is stretchable and is one pixel wide. Make the track images wider to provide rounded corners, but be sure to set these images' `capInsets` property to allow room for the corners.
+This sample demonstrates different ways to display a `UISlider`, a control used to select a single value from a continuous range of values. You customize the appearance of a slider by assigning stretchable images for left-side tracking, right-side tracking, and the thumb. In this example, the track image is stretchable and is one pixel wide. Make the track images wider to provide rounded corners, but be sure to set these images' `capInsets` property to allow for the corners.
 
 The `configureCustomSlider` function sets up a custom slider:
 
@@ -200,7 +203,40 @@ func configurePageControl() {
 
     pageControl.pageIndicatorTintColor = UIColor.systemGreen
     pageControl.currentPageIndicatorTintColor = UIColor.systemPurple
-
+    
     pageControl.addTarget(self, action: #selector(PageControlViewController.pageControlValueDidChange), for: .valueChanged)
 }
 ```
+
+## Add Menus to Your Controls
+
+You can attach menus to controls like `UIButton` and `UIBarButtonItem`. Create menus with the [`UIAction`](https://developer.apple.com/documentation/uikit/uiaction) class, and attach a menu to each control by setting the [`UIMenu`](https://developer.apple.com/documentation/uikit/uimenu) property.
+
+Attach a menu to a `UIButton` as shown here:
+
+``` swift
+func configureMenuButton() {
+    let buttonTitle = NSLocalizedString("Button", comment: "")
+    menuButton.setTitle(buttonTitle, for: .normal)
+
+    let items = (1...5).map {
+        UIAction(title: String(format: NSLocalizedString("ItemTitle", comment: ""), $0.description), handler: menuHandler)
+    }
+    menuButton.menu = UIMenu(title: NSLocalizedString("ChooseItemTitle", comment: ""), children: items)
+    menuButton.showsMenuAsPrimaryAction = true
+}
+```
+
+Create a `UIBarButtonItem` with a menu attached as shown here:
+
+``` swift
+var customTitleBarButtonItem: UIBarButtonItem {
+    let buttonMenu = UIMenu(title: "",
+                            children: (1...5).map {
+                               UIAction(title: "Option \($0)", handler: menuHandler)
+                            })
+    return UIBarButtonItem(image: UIImage(systemName: "list.number"), menu: buttonMenu)
+}
+```
+
+

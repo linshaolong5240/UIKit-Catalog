@@ -46,6 +46,8 @@ class StepperViewController: UITableViewController {
 
     func configureTintedStepper() {
         tintedStepper.tintColor = UIColor(named: "tinted_stepper_control")!
+        tintedStepper.setDecrementImage(tintedStepper.decrementImage(for: .normal), for: .normal)
+        tintedStepper.setIncrementImage(tintedStepper.incrementImage(for: .normal), for: .normal)
         
         tintedStepperLabel.text = "\(Int(tintedStepper.value))"
         tintedStepper.addTarget(self, action: #selector(StepperViewController.stepperValueDidChange(_:)), for: .valueChanged)

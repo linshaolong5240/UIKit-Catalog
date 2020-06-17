@@ -17,7 +17,6 @@ Strings used across the application via the NSLocalizedString API.
 "Button" = "Button";
 "X Button" = "X Button";
 "Image" = "Image";
-"Action" = "Action";
 "bold" = "bold";
 "highlighted" = "highlighted";
 "underlined" = "underlined";
@@ -33,5 +32,49 @@ Strings used across the application via the NSLocalizedString API.
 "Gift" = "Gift";
 "Burst" = "Burst";
 
-"UIKitCatalog" = "UIKitCatalog";
 "An error occurred:" = "An error occurred:";
+
+"ButtonsTitle" = "Buttons";
+"PageControlTitle" = "Page Controls";
+"SearchBarsTitle" = "Search Bars";
+"SegmentedControlsTitle" = "Segmented Controls";
+"SlidersTitle" = "Sliders";
+"SteppersTitle" = "Steppers";
+"SwitchesTitle" = "Switches";
+"TextFieldsTitle" = "Text Fields";
+
+"ActivityIndicatorsTitle" = "Activity Indicators";
+"AlertControllersTitle" = "Alert Controllers";
+"ImageViewTitle" = "Image View";
+"ProgressViewsTitle" = "Progress Views";
+"StackViewsTitle" = "Stack Views";
+"TextViewTitle" = "Text View";
+"ToolbarsTitle" = "Toolbars";
+"WebViewTitle" = "Web View";
+
+"DatePickerTitle" = "Date Picker";
+"PickerViewTitle" = "Picker View";
+"ColorPickerTitle" = "Color Picker";
+"FontPickerTitle" = "Font Picker";
+"ImagePickerTitle" = "Image Picker";
+
+"DefaultSearchBarTitle" = "Default Search Bar";
+"CustomSearchBarTitle" = "Custom Search Bar";
+
+"DefaultToolBarTitle" = "Default Toolbar";
+"TintedToolbarTitle" = "Tinted Toolbar";
+"CustomToolbarBarTitle" = "Custom Toolbar";
+
+"ChooseItemTitle" = "Choose an item:";
+"ItemTitle" = "Item %@";
+
+"SampleFontTitle" = "Sample Font";
+
+"CheckTitle" = "Check";
+"SearchTitle" = "Search";
+"ToolsTitle" = "Tools";
+
+"DefaultPageControlTitle" = "Page Control";
+"CustomPageControlTitle" = "Custom Page Control";
+
+

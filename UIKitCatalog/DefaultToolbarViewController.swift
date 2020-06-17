@@ -39,12 +39,16 @@ class DefaultToolbarViewController: UIViewController {
                                action: nil)
     }
 
+    func menuHandler(action: UIAction) {
+        Swift.debugPrint("Menu Action '\(action.title)'")
+    }
+    
     var customTitleBarButtonItem: UIBarButtonItem {
-        let customTitle = NSLocalizedString("Action", comment: "")
-        return UIBarButtonItem(title: customTitle,
-                               style: .plain,
-                               target: self,
-                               action: #selector(DefaultToolbarViewController.barButtonItemClicked(_:)))
+        let buttonMenu = UIMenu(title: "",
+                                children: (1...5).map {
+                                   UIAction(title: "Option \($0)", handler: menuHandler)
+                                })
+        return UIBarButtonItem(image: UIImage(systemName: "list.number"), menu: buttonMenu)
     }
 
     // MARK: - Actions

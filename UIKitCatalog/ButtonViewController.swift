@@ -21,6 +21,7 @@ class ButtonViewController: UITableViewController {
     @IBOutlet weak var attributedTextButton: UIButton!
     @IBOutlet weak var symbolButton: UIButton!
     @IBOutlet weak var symbolTextButton: UIButton!
+    @IBOutlet weak var menuButton: UIButton!
     
     // MARK: - View Life Cycle
 
@@ -35,6 +36,7 @@ class ButtonViewController: UITableViewController {
         configureAttributedTextSystemButton()
         configureSymbolButton()
         configureSymbolTextButton()
+        configureMenuButton()
     }
 
     // MARK: - Configuration
@@ -124,6 +126,21 @@ class ButtonViewController: UITableViewController {
         symbolTextButton.setPreferredSymbolConfiguration(config, forImageIn: .normal)
     }
     
+    func menuHandler(action: UIAction) {
+        Swift.debugPrint("Menu Action '\(action.title)'")
+    }
+    
+    func configureMenuButton() {
+        let buttonTitle = NSLocalizedString("Button", comment: "")
+        menuButton.setTitle(buttonTitle, for: .normal)
+
+        let items = (1...5).map {
+            UIAction(title: String(format: NSLocalizedString("ItemTitle", comment: ""), $0.description), handler: menuHandler)
+        }
+        menuButton.menu = UIMenu(title: NSLocalizedString("ChooseItemTitle", comment: ""), children: items)
+        menuButton.showsMenuAsPrimaryAction = true
+    }
+    
     // MARK: - Actions
 
     @objc
@@ -131,3 +148,4 @@ class ButtonViewController: UITableViewController {
         print("A button was clicked: \(sender).")
     }
 }
+
