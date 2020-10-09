@@ -21,27 +21,49 @@ class SliderViewController: UITableViewController {
         super.viewDidLoad()
 
         configureDefaultSlider()
+        #if !targetEnvironment(macCatalyst)
+        /** Only show for the first table cell (default slider).
+            Because this sample has "Optimize Interface for Mac" turned on -
+            UISlider class: tinted, custom, and max/min image, are not supported when running Mac Catalyst apps in the Mac idiom.
+        */
         configureTintedSlider()
         configureCustomSlider()
         configureMinMaxImageSlider()
+        #endif
     }
 
     // MARK: - Configuration
-
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        #if targetEnvironment(macCatalyst)
+        /** Only show for the first table cell (default slider).
+            Because this sample has "Optimize Interface for Mac" turned on -
+            UISlider class: tinted, custom, and max/min image, are not supported when running Mac Catalyst apps in the Mac idiom.
+        */
+        return 1
+        #else
+        return super.numberOfSections(in: tableView)
+        #endif
+    }
+    
     func configureDefaultSlider() {
         defaultSlider.minimumValue = 0
         defaultSlider.maximumValue = 100
         defaultSlider.value = 42
         defaultSlider.isContinuous = true
 
-        defaultSlider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
+        defaultSlider.addTarget(self,
+                                action: #selector(SliderViewController.sliderValueDidChange(_:)),
+                                for: .valueChanged)
     }
 
     func configureTintedSlider() {
         tintedSlider.minimumTrackTintColor = UIColor.systemBlue
         tintedSlider.maximumTrackTintColor = UIColor.systemPurple
 
-        tintedSlider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
+        tintedSlider.addTarget(self,
+                               action: #selector(SliderViewController.sliderValueDidChange(_:)),
+                               for: .valueChanged)
     }
 
     func configureCustomSlider() {

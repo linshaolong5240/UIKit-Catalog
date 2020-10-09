@@ -64,14 +64,12 @@ class ButtonViewController: UITableViewController {
     func configureImageButton() {
         // To create this button in code you can use `UIButton.init(type: .system)`.
 
-        // Remove the title text.
-        imageButton.setTitle("", for: .normal)
-
-        imageButton.tintColor = UIColor.systemPurple
-
-        let imageButtonNormalImage = #imageLiteral(resourceName: "x_icon")
-		imageButton.setImage(imageButtonNormalImage, for: .normal)
-
+        // Set the tint color to the button's image.
+        if let image = UIImage(named: "x_icon") {
+            let imageButtonNormalImage = image.withTintColor(.systemPurple)
+            imageButton.setImage(imageButtonNormalImage, for: .normal)
+        }
+                
         // Add an accessibility label to the image.
         imageButton.accessibilityLabel = NSLocalizedString("X", comment: "")
 
@@ -83,7 +81,6 @@ class ButtonViewController: UITableViewController {
         
         // Set the button's title for normal state.
 		let normalTitleAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
             NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
         ]
         

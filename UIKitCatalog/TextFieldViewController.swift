@@ -36,7 +36,7 @@ class TextFieldViewController: UITableViewController {
         textField.placeholder = NSLocalizedString("Placeholder text", comment: "")
         textField.autocorrectionType = .yes
         textField.returnKeyType = .done
-        textField.clearButtonMode = .never
+        textField.clearButtonMode = .whileEditing
     }
 
     func configureTintedTextField() {
@@ -92,7 +92,7 @@ class TextFieldViewController: UITableViewController {
 
         customTextField.background = UIImage(named: "text_field_background")
 
-        // Create a purple button that, when selected, turns the custom text field's text color to purple.
+        // Create a purple button to be used as the right view of the custom text field.
         let purpleImage = UIImage(named: "text_field_purple_right_view")!
         let purpleImageButton = UIButton(type: .custom)
         purpleImageButton.bounds = CGRect(x: 0, y: 0, width: purpleImage.size.width, height: purpleImage.size.height)
@@ -104,6 +104,7 @@ class TextFieldViewController: UITableViewController {
 
         customTextField.placeholder = NSLocalizedString("Placeholder text", comment: "")
         customTextField.autocorrectionType = .no
+        customTextField.clearButtonMode = .never
         customTextField.returnKeyType = .done
     }
 	
@@ -112,6 +113,37 @@ class TextFieldViewController: UITableViewController {
     @objc
     func customTextFieldPurpleButtonClicked() {
         print("The custom text field's purple right view button was clicked.")
+    }
+    
+    // MARK: - UITableViewDataSource
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        #if targetEnvironment(macCatalyst)
+        // Don't show text field with custom background for macOS, it does not exist.
+        if section == 4 {
+            return ""
+        } else {
+            return super.tableView(tableView, titleForHeaderInSection: section)
+        }
+        #else
+        return super.tableView(tableView, titleForHeaderInSection: section)
+        #endif
+    }
+
+    // MARK: - UITableViewDelegate
+
+    override func tableView(_ tableView: UITableView,
+                            heightForRowAt indexPath: IndexPath) -> CGFloat {
+        #if targetEnvironment(macCatalyst)
+        // Don't show text field with custom background for macOS, it does not exist.
+        if indexPath.section == 4 {
+            return 0
+        } else {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
+        #else
+        return super.tableView(tableView, heightForRowAt: indexPath)
+        #endif
     }
 
 }

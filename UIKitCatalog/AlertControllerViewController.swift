@@ -115,8 +115,6 @@ class AlertControllerViewController: UITableViewController {
     func showTextEntryAlert() {
         let title = NSLocalizedString("A Short Title is Best", comment: "")
         let message = NSLocalizedString("A message should be a short, complete sentence.", comment: "")
-        let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
-        let otherButtonTitle = NSLocalizedString("OK", comment: "")
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -126,10 +124,12 @@ class AlertControllerViewController: UITableViewController {
         }
 
         // Create the actions.
+        let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
         let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { _ in
             print("The \"Text Entry\" alert's cancel action occurred.")
         }
         
+        let otherButtonTitle = NSLocalizedString("OK", comment: "")
         let otherAction = UIAlertAction(title: otherButtonTitle, style: .default) { _ in
             print("The \"Text Entry\" alert's other action occurred.")
         }

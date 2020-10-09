@@ -34,6 +34,16 @@ class StepperViewController: UITableViewController {
 
     // MARK: - Configuration
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        #if targetEnvironment(macCatalyst)
+        // Only show for the first table cell (default stepper).
+        // Tinted and Custom steppers do not exist in macOS.
+        return 1
+        #else
+        return super.numberOfSections(in: tableView)
+        #endif
+    }
+    
     func configureDefaultStepper() {
         defaultStepper.value = 0
         defaultStepper.minimumValue = 0
@@ -41,7 +51,9 @@ class StepperViewController: UITableViewController {
         defaultStepper.stepValue = 1
 
         defaultStepperLabel.text = "\(Int(defaultStepper.value))"
-        defaultStepper.addTarget(self, action: #selector(StepperViewController.stepperValueDidChange(_:)), for: .valueChanged)
+        defaultStepper.addTarget(self,
+                                 action: #selector(StepperViewController.stepperValueDidChange(_:)),
+                                 for: .valueChanged)
     }
 
     func configureTintedStepper() {
@@ -50,7 +62,9 @@ class StepperViewController: UITableViewController {
         tintedStepper.setIncrementImage(tintedStepper.incrementImage(for: .normal), for: .normal)
         
         tintedStepperLabel.text = "\(Int(tintedStepper.value))"
-        tintedStepper.addTarget(self, action: #selector(StepperViewController.stepperValueDidChange(_:)), for: .valueChanged)
+        tintedStepper.addTarget(self,
+                                action: #selector(StepperViewController.stepperValueDidChange(_:)),
+                                for: .valueChanged)
     }
 
     func configureCustomStepper() {

@@ -77,4 +77,5 @@ Strings used across the application via the NSLocalizedString API.
 "DefaultPageControlTitle" = "Page Control";
 "CustomPageControlTitle" = "Custom Page Control";
 
+"SwitchTitle" = "Title";
 

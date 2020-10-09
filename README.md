@@ -1,10 +1,10 @@
 # UIKit Catalog: Creating and Customizing Views and Controls
 
-Customize your app's user interface with views and controls in UIKit.
+Customize your app's user interface with views and controls.
 
 ## Overview
 
-This sample guides you through several types of customizations that you can make in your iOS app. The sample uses a split view controller architecture for navigating UIKit views and controls. The primary view controller (`MasterViewController`) shows the available views and controls. Selecting one shows the secondary view controller associated with it.
+This sample guides you through several types of customizations you can make in your iOS app. The sample uses a split-view controller architecture for navigating UIKit views and controls. The primary view controller (`MasterViewController`) shows the available views and controls. When you select one, `MasterViewController` shows the secondary view controller associated with it.
 
 The name of each secondary view controller reflects its *target item*. For example, the `AlertControllerViewController` class shows how to use a `UIAlertController` object. The only exceptions to this rule are `UISearchBar` and `UIToolbar`; the sample demonstrates these APIs in multiple view controllers to explain how their controls function and how to customize them. To demonstrate how to manage the complexity of your storyboards, the app hosts all view controllers in a separate storyboard and loaded when needed.
 
@@ -16,6 +16,7 @@ This sample demonstrates the following views and controls (several of which are 
 * [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker)
 * [`UIPickerView`](https://developer.apple.com/documentation/uikit/uipickerview)
 * [`UIColorPickerViewController`](https://developer.apple.com/documentation/uikit/uicolorpickerviewcontroller)
+* [`UIColorWell`](https://developer.apple.com/documentation/uikit/uicolorwell)
 * [`UIFontPickerViewController`](https://developer.apple.com/documentation/uikit/uifontpickerviewcontroller)
 * [`UIImagePickerViewController`](https://developer.apple.com/documentation/uikit/uiimagepickercontroller)
 * [`UIImageView`](https://developer.apple.com/documentation/uikit/uiimageview)
@@ -28,13 +29,14 @@ This sample demonstrates the following views and controls (several of which are 
 * [`UIStepper`](https://developer.apple.com/documentation/uikit/uistepper)
 * [`UISwitch`](https://developer.apple.com/documentation/uikit/uiswitch)
 * [`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield)
+* [`UITextFormattingCoordinator`](https://developer.apple.com/documentation/uikit/uitextformattingcoordinator)
 * [`UITextView`](https://developer.apple.com/documentation/uikit/uitextview)
 * [`UIToolbar`](https://developer.apple.com/documentation/uikit/uitoolbar)
 * [`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview)
 
 ## Add Accessibility Support to Your Views
 
-VoiceOver and other system accessibility technologies use the information provided by your views and controls to help all users navigate your content. UIKit views include default accessibility support, but you can improve the user experience by providing custom accessibility information.
+VoiceOver and other system accessibility technologies use the information provided by views and controls to help all users navigate content. UIKit views include default accessibility support. Improve user experience by providing custom accessibility information.
 
 In this UIKitCatalog sample, several view controllers configure the `accessibilityType` and `accessibilityLabel` properties of their associated view. Picker view columns don't have labels, so the picker view asks its delegate for the corresponding accessibility information:
 
@@ -56,14 +58,14 @@ func pickerView(_ pickerView: UIPickerView, accessibilityLabelForComponent compo
 
 ## Display a Custom Alert
 
-`AlertControllerViewController` demonstrates several techniques for displaying modal alerts and action sheets from your interface. The configuration process is similar for all alerts:
+`AlertControllerViewController` demonstrates several techniques for displaying modal alerts and action sheets from an interface. The configuration process is similar for all alerts:
 
 1. Determine the message you want to display in the alert.
 2. Create and configure a `UIAlertController` object.
-3. Add handlers for actions that the user may take.
+3. Add handlers for actions the user may take.
 4. Present the alert controller.
 
-The `showSimpleAlert` function uses the `NSLocalizedString` function to retrieve the alert messages in the user’s preferred language. The `showSimpleAlert` function uses those strings to create and configure the `UIAlertController` object. Although the button in the alert has the title OK, the sample uses a cancel action to ensure that the alert controller applies the proper styling to the button:
+The `showSimpleAlert` function uses the `NSLocalizedString` function to retrieve the alert messages in the user’s preferred language. The `showSimpleAlert` function uses those strings to create and configure the `UIAlertController` object. Although the button in the alert has the title OK, the sample uses a cancel action to ensure the alert controller applies the proper styling to the button:
 
 ``` swift
 func showSimpleAlert() {
@@ -87,7 +89,7 @@ func showSimpleAlert() {
 
 ## Customize the Appearance of Sliders
 
-This sample demonstrates different ways to display a `UISlider`, a control used to select a single value from a continuous range of values. You customize the appearance of a slider by assigning stretchable images for left-side tracking, right-side tracking, and the thumb. In this example, the track image is stretchable and is one pixel wide. Make the track images wider to provide rounded corners, but be sure to set these images' `capInsets` property to allow for the corners.
+This sample demonstrates different ways to display a `UISlider`, a control you use to select a single value from a continuous range of values. Customize the appearance of a slider by assigning stretchable images for left-side tracking, right-side tracking, and the thumb. In this example, the track image is stretchable and is one pixel wide. Make the track images wider to provide rounded corners, but be sure to set these images' `capInsets` property to allow for the corners.
 
 The `configureCustomSlider` function sets up a custom slider:
 
@@ -115,9 +117,9 @@ func configureCustomSlider() {
 }
 ```
 
-## Add a Search Bar to Your Interface
+## Add a Search Bar to an Interface
 
-Use a `UISearchBar` for receiving search-related information from the user. There are various ways to customize the look of the search bar:
+Use a `UISearchBar` to receive search-related information from the user. There are various ways to customize the look of the search bar:
 
 * Add a cancel button.
 * Add a bookmark button.
@@ -147,7 +149,7 @@ func configureSearchBar() {
 
 ## Customize the Appearance of Toolbars
 
-This sample shows how to customize a `UIToolbar`, a specialized view that displays one or more buttons along the bottom edge of your interface. Customize a toolbar by determining its bar style (black or default), translucency, tint color, and background color.
+This sample shows how to customize a `UIToolbar`, a specialized view that displays one or more buttons along the bottom edge of an interface. Customize a toolbar by determining its bar style (black or default), translucency, tint color, and background color.
 
 The following `viewDidLoad` function in `CustomToolbarViewController` sets up a tinted tool bar:
 
@@ -191,7 +193,7 @@ override func viewDidLoad() {
 
 ## Add a Page Control Interface
 
-Use a `UIPageControl` to structure your app's user interface. A page control is a specialized control that displays a horizontal series of dots, each of which corresponds to a page in the app’s document or other data-model entity. You customize a page control by setting its tint color for all the page indicator dots, and for the current page indicator dot.
+Use a `UIPageControl` to structure an app's user interface. A page control is a specialized control that displays a horizontal series of dots, each of which corresponds to a page in the app’s document or other data-model entity. Customize a page control by setting its tint color for all the page-indicator dots, and for the current page-indicator dot.
 
 The `configurePageControl` function sets up a customized page control:
 
@@ -210,7 +212,7 @@ func configurePageControl() {
 
 ## Add Menus to Your Controls
 
-You can attach menus to controls like `UIButton` and `UIBarButtonItem`. Create menus with the [`UIAction`](https://developer.apple.com/documentation/uikit/uiaction) class, and attach a menu to each control by setting the [`UIMenu`](https://developer.apple.com/documentation/uikit/uimenu) property.
+Attach menus to controls like `UIButton` and `UIBarButtonItem`. Create menus with the [`UIAction`](https://developer.apple.com/documentation/uikit/uiaction) class, and attach a menu to each control by setting the [`UIMenu`](https://developer.apple.com/documentation/uikit/uimenu) property.
 
 Attach a menu to a `UIButton` as shown here:
 
@@ -239,4 +241,14 @@ var customTitleBarButtonItem: UIBarButtonItem {
 }
 ```
 
+## Support Mac Catalyst
 
+This sample app is built with Mac Catalyst, which means the sample runs on both iPad and Mac. This is achieved by selecting the Mac checkbox in Project Settings. For more about how Mac Catalyst works see [Mac Catalyst](https://developer.apple.com/mac-catalyst/).
+
+When built for Mac Catalyst, this sample achieves:
+
+* Interface Optimization for Mac — With Optimize Interface For the Mac project setting turned on, the app has full control of every pixel on the screen, and the app can adopt more controls specific to Mac. Building the sample for Mac Catalyst makes the app take advantage of the system features in macOS.  The option Show Designed for iPad Run Destination allows this sample, as an iPad app, to run "as-is" on Apple silicon Macs. This requires macOS 11 and a Mac with Apple silicon.
+
+* Navigation and title bar hiding — The sample app hides these to make the app appear more like a Mac app. It also changes other behaviors by using traitCollection's `userInterfaceIdiom` or the compilation conditional block that uses the `targetEnvironment():` platform condition.
+
+* Translucent background — By setting the split view controller's `primaryBackgroundStyle` to `.sidebar`, the primary view controller or side bar shows a blurred desktop behind its view. Setting this property has no effect when running in iOS.

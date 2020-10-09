@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K8w-Uq-R9J">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K8w-Uq-R9J">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17502"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,20 +29,20 @@
                                         <rect key="frame" x="0.0" y="30.5" width="343" height="34"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="St9-G8-PkK">
-                                                <rect key="frame" x="0.0" y="0.0" width="105" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="104" height="34"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PKs-Ty-pao">
-                                                <rect key="frame" x="115" y="0.0" width="176" height="34"/>
+                                                <rect key="frame" x="114" y="0.0" width="177.5" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZd-jG-vsf">
-                                                <rect key="frame" x="301" y="0.0" width="42" height="34"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZd-jG-vsf">
+                                                <rect key="frame" x="301.5" y="0.0" width="41.5" height="34"/>
                                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                                <state key="normal" image="stepper_increment"/>
+                                                <state key="normal" image="plus" catalog="system"/>
                                                 <connections>
                                                     <action selector="showFurtherDetail:" destination="K8w-Uq-R9J" eventType="touchUpInside" id="zM0-ux-Y4O"/>
                                                 </connections>
@@ -52,20 +53,20 @@
                                         <rect key="frame" x="0.0" y="74.5" width="343" height="34"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Further Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqg-vd-ycM">
-                                                <rect key="frame" x="0.0" y="0.0" width="105" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="104" height="34"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Iva-ta-sqG">
-                                                <rect key="frame" x="115" y="0.0" width="176" height="34"/>
+                                                <rect key="frame" x="114" y="0.0" width="177.5" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EyS-LN-1u7">
-                                                <rect key="frame" x="301" y="0.0" width="42" height="34"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EyS-LN-1u7">
+                                                <rect key="frame" x="301.5" y="0.0" width="41.5" height="34"/>
                                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                                <state key="normal" image="stepper_decrement"/>
+                                                <state key="normal" image="minus" catalog="system"/>
                                                 <connections>
                                                     <action selector="hideFurtherDetail:" destination="K8w-Uq-R9J" eventType="touchUpInside" id="2br-ix-gLo"/>
                                                 </connections>
@@ -84,26 +85,26 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HBg-iH-Es9">
-                                <rect key="frame" x="16" y="206.5" width="343" height="42"/>
+                                <rect key="frame" x="16" y="206.5" width="343" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add/remove views" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kvo-0P-2un">
-                                        <rect key="frame" x="0.0" y="0.0" width="259" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="40"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Got-h9-YTc" userLabel="Add button">
-                                        <rect key="frame" x="259" y="0.0" width="42" height="42"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Got-h9-YTc" userLabel="Add button">
+                                        <rect key="frame" x="260" y="0.0" width="41.5" height="40"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                        <state key="normal" image="stepper_increment"/>
+                                        <state key="normal" image="plus" catalog="system"/>
                                         <connections>
                                             <action selector="addArrangedSubviewToStack:" destination="K8w-Uq-R9J" eventType="touchUpInside" id="Gi5-my-DDb"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YkZ-DW-LIz" userLabel="Remove button">
-                                        <rect key="frame" x="301" y="0.0" width="42" height="42"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YkZ-DW-LIz" userLabel="Remove button">
+                                        <rect key="frame" x="301.5" y="0.0" width="41.5" height="40"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                        <state key="normal" image="stepper_decrement"/>
+                                        <state key="normal" image="minus" catalog="system"/>
                                         <connections>
                                             <action selector="removeArrangedSubviewFromStack:" destination="K8w-Uq-R9J" eventType="touchUpInside" id="4tK-3G-rEB"/>
                                         </connections>
@@ -111,13 +112,14 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pVr-DZ-tf0">
-                                <rect key="frame" x="16" y="256.5" width="343" height="42"/>
+                                <rect key="frame" x="16" y="254.5" width="343" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" placeholder="YES" id="7Rt-U8-9u4"/>
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="FWG-QM-hGj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="cDn-lT-iQW" firstAttribute="leading" secondItem="Hwb-09-b4P" secondAttribute="leadingMargin" id="0E3-xe-Wem"/>
                             <constraint firstItem="HBg-iH-Es9" firstAttribute="top" secondItem="cDn-lT-iQW" secondAttribute="bottom" constant="20" id="2dx-wn-jkY"/>
@@ -129,7 +131,6 @@
                             <constraint firstItem="HBg-iH-Es9" firstAttribute="leading" secondItem="Hwb-09-b4P" secondAttribute="leadingMargin" id="lM1-th-6X7"/>
                             <constraint firstItem="pVr-DZ-tf0" firstAttribute="trailing" secondItem="Hwb-09-b4P" secondAttribute="trailingMargin" id="vPE-u0-sZi"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="FWG-QM-hGj"/>
                     </view>
                     <navigationItem key="navigationItem" title="Stack Views" id="nhS-n7-kRE"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -147,7 +148,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="stepper_decrement" width="22" height="22"/>
-        <image name="stepper_increment" width="22" height="22"/>
+        <image name="minus" catalog="system" width="128" height="24"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

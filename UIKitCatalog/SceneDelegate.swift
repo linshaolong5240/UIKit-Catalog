@@ -21,9 +21,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UISplitViewControllerDe
         The recommended approach is for the SceneDelegate to retain the scene's window.
     */
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
         if let splitViewController = window!.rootViewController as? UISplitViewController {
             splitViewController.delegate = self
+            
             splitViewController.preferredDisplayMode = .oneBesideSecondary
+            splitViewController.presentsWithGesture = false
+            
+            if let navController = splitViewController.viewControllers[1] as? UINavigationController {
+                // For the Mac, remove the title bar and navigation bar.
+                #if targetEnvironment(macCatalyst)
+                    if let titlebar = windowScene.titlebar {
+                        titlebar.titleVisibility = .hidden
+                        titlebar.toolbar = nil
+                    }
+                    // Hide the navigation bar on the Mac.
+                    navController.navigationBar.isHidden = true
+                #endif
+            }
         }
     }
 

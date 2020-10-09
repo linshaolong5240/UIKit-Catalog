@@ -132,4 +132,35 @@ class SegmentedControlViewController: UITableViewController {
     func selectedSegmentDidChange(_ segmentedControl: UISegmentedControl) {
         print("The selected segment changed for: \(segmentedControl).")
     }
+    
+    // MARK: - UITableViewDataSource
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        #if targetEnvironment(macCatalyst)
+        // Don't show tinted segmented control for macOS, it does not exist.
+        if section == 1 {
+            return ""
+        } else {
+            return super.tableView(tableView, titleForHeaderInSection: section)
+        }
+        #else
+        return super.tableView(tableView, titleForHeaderInSection: section)
+        #endif
+    }
+    
+    // MARK: - UITableViewDelegate
+    
+    override func tableView(_ tableView: UITableView,
+                            heightForRowAt indexPath: IndexPath) -> CGFloat {
+        #if targetEnvironment(macCatalyst)
+        // Don't show tinted segmented control for macOS, it does not exist.
+        if indexPath.section == 1 {
+            return 0
+        } else {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
+        #else
+        return super.tableView(tableView, heightForRowAt: indexPath)
+        #endif
+    }
 }
