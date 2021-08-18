@@ -7,26 +7,25 @@ A view controller that demonstrates how to use `UIProgressView`.
 
 import UIKit
 
-class ProgressViewController: UITableViewController {
+class ProgressViewController: BaseTableViewController {
+    // Cell identifier for each progress view table view cell.
+    enum ProgressViewKind: String, CaseIterable {
+        case defaultProgress
+        case barProgress
+        case tintedProgress
+    }
+    
     // MARK: - Properties
     
-    @IBOutlet weak var defaultStyleProgressView: UIProgressView!
+    var observer: NSKeyValueObservation?
     
-    @IBOutlet weak var barStyleProgressView: UIProgressView!
-    
-    @IBOutlet weak var tintedProgressView: UIProgressView!
-
-    @IBOutlet var progressViews: [UIProgressView]!
-    
-	var observer: NSKeyValueObservation?
-	
-	/**	An `NSProgress` object who's `fractionCompleted` is observed using KVO to update
-		the `UIProgressView`s' `progress` properties.
-    */
-	let progress = Progress(totalUnitCount: 10)
+    // An `NSProgress` object whose `fractionCompleted` is observed using KVO to update the `UIProgressView`s' `progress` properties.
+    let progress = Progress(totalUnitCount: 10)
     
     // A repeating timer that, when fired, updates the `NSProgress` object's `completedUnitCount` property.
-	var updateTimer: Timer?
+    var updateTimer: Timer?
+    
+    var progressViews = [UIProgressView]() // Accumulated progress views from all table cells for progress updating.
     
     // MARK: - Initialization
     
@@ -34,37 +33,46 @@ class ProgressViewController: UITableViewController {
         super.init(coder: aDecoder)
 		
         // Register as an observer of the `NSProgress`'s `fractionCompleted` property.
-		observer = progress.observe(\.fractionCompleted, options: [.new]) { (_, _) in
-			// Update the progress views.
-			for progressView in self.progressViews {
+        observer = progress.observe(\.fractionCompleted, options: [.new]) { (_, _) in
+            // Update the progress views.
+            for progressView in self.progressViews {
 				progressView.setProgress(Float(self.progress.fractionCompleted), animated: true)
-			}
-		}
+            }
+        }
     }
     
     deinit {
         // Unregister as an observer of the `NSProgress`'s `fractionCompleted` property.
 		observer?.invalidate()
     }
-    
-    // MARK: - View Life Cycle
 
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureDefaultStyleProgressView()
-        configureBarStyleProgressView()
-        configureTintedProgressView()
+        testCells.append(contentsOf: [
+            CaseElement(title: NSLocalizedString("ProgressDefaultTitle", comment: ""),
+                        cellID: ProgressViewKind.defaultProgress.rawValue,
+                        configHandler: configureDefaultStyleProgressView),
+            CaseElement(title: NSLocalizedString("ProgressBarTitle", comment: ""),
+                        cellID: ProgressViewKind.barProgress.rawValue,
+                        configHandler: configureBarStyleProgressView)
+        ])
+        
+        if traitCollection.userInterfaceIdiom != .mac {
+            // Tinted progress views available only on iOS.
+            testCells.append(contentsOf: [
+                CaseElement(title: NSLocalizedString("ProgressTintedTitle", comment: ""),
+                            cellID: ProgressViewKind.tintedProgress.rawValue,
+                            configHandler: configureTintedProgressView)
+            ])
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // Reset the completed progress of the `UIProgressView`s.
-        for progressView in progressViews {
-            progressView.setProgress(0.0, animated: false)
-        }
-        
+
         /** Reset the `completedUnitCount` of the `NSProgress` object and create
             a repeating timer to increment it over time.
         */
@@ -91,50 +99,34 @@ class ProgressViewController: UITableViewController {
 	
     // MARK: - Configuration
 
-    func configureDefaultStyleProgressView() {
-        defaultStyleProgressView.progressViewStyle = .default
+    func configureDefaultStyleProgressView(_ progressView: UIProgressView) {
+        progressView.progressViewStyle = .default
+        
+        // Reset the completed progress of the `UIProgressView`s.
+        progressView.setProgress(0.0, animated: false)
+        
+        progressViews.append(progressView)
     }
 
-    func configureBarStyleProgressView() {
-        barStyleProgressView.progressViewStyle = .bar
+    func configureBarStyleProgressView(_ progressView: UIProgressView) {
+        progressView.progressViewStyle = .bar
+        
+        // Reset the completed progress of the `UIProgressView`s.
+        progressView.setProgress(0.0, animated: false)
+        
+        progressViews.append(progressView)
     }
 
-    func configureTintedProgressView() {
-        tintedProgressView.progressViewStyle = .default
+    func configureTintedProgressView(_ progressView: UIProgressView) {
+        progressView.progressViewStyle = .default
 
-        tintedProgressView.trackTintColor = UIColor.systemBlue
-        tintedProgressView.progressTintColor = UIColor.systemPurple
+        progressView.trackTintColor = UIColor.systemBlue
+        progressView.progressTintColor = UIColor.systemPurple
+        
+        // Reset the completed progress of the `UIProgressView`s.
+        progressView.setProgress(0.0, animated: false)
+        
+        progressViews.append(progressView)
     }
 
-    // MARK: - UITableViewDataSource
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        #if targetEnvironment(macCatalyst)
-        // Don't show tinted progress view for macOS, it does not exist.
-        if section == 2 {
-            return ""
-        } else {
-            return super.tableView(tableView, titleForHeaderInSection: section)
-        }
-        #else
-        return super.tableView(tableView, titleForHeaderInSection: section)
-        #endif
-    }
-    
-    // MARK: - UITableViewDelegate
-    
-    override func tableView(_ tableView: UITableView,
-                            heightForRowAt indexPath: IndexPath) -> CGFloat {
-        #if targetEnvironment(macCatalyst)
-        // Don't show tinted progress view for macOS, it does not exist.
-        if indexPath.section == 2 {
-            return 0
-        } else {
-            return super.tableView(tableView, heightForRowAt: indexPath)
-        }
-        #else
-        return super.tableView(tableView, heightForRowAt: indexPath)
-        #endif
-    }
-    
 }

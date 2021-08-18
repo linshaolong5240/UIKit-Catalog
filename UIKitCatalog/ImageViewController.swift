@@ -32,6 +32,13 @@ class ImageViewController: UIViewController {
             
             imageView.isAccessibilityElement = true
             imageView.accessibilityLabel = NSLocalizedString("Animated", comment: "")
+            
+            if #available(iOS 15, *) {
+                // This case uses UIToolTipInteraction which is available on iOS 15 or later.
+                let interaction =
+                    UIToolTipInteraction(defaultToolTip: NSLocalizedString("ImageToolTipTitle", comment: ""))
+                imageView.addInteraction(interaction)
+            }
         }
     }
 }

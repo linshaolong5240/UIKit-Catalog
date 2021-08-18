@@ -57,7 +57,7 @@ class CustomToolbarViewController: UIViewController {
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.systemPurple
         ]
-        barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        barButtonItem.setTitleTextAttributes(attributes, for: [])
 
         return barButtonItem
     }
@@ -66,7 +66,7 @@ class CustomToolbarViewController: UIViewController {
     
     @objc
     func barButtonItemClicked(_ barButtonItem: UIBarButtonItem) {
-        print("A bar button item on the custom toolbar was clicked: \(barButtonItem).")
+        Swift.debugPrint("A bar button item on the custom toolbar was clicked: \(barButtonItem).")
     }
 
 }

@@ -38,17 +38,17 @@ class DefaultSearchBarViewController: UIViewController {
 
 extension DefaultSearchBarViewController: UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-		print("The default search selected scope button index changed to \(selectedScope).")
+        Swift.debugPrint("The default search selected scope button index changed to \(selectedScope).")
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		print("The default search bar keyboard search button was tapped: \(String(describing: searchBar.text)).")
+        Swift.debugPrint("The default search bar keyboard search button was tapped: \(String(describing: searchBar.text)).")
 		
 		searchBar.resignFirstResponder()
 	}
 	
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		print("The default search bar cancel button was tapped.")
+        Swift.debugPrint("The default search bar cancel button was tapped.")
 		
 		searchBar.resignFirstResponder()
 	}

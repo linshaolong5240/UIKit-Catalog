@@ -26,10 +26,10 @@ class FontPickerViewController: UIViewController {
         
         configureFontPicker()
         
-        #if !targetEnvironment(macCatalyst)
+        if traitCollection.userInterfaceIdiom != .mac {
             // UITextFormattingCoordinator's toggleFontPanel is available only for macOS.
             textFormatterButton.isHidden = true
-        #endif
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

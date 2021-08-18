@@ -85,7 +85,7 @@ class CustomPageControlViewController: UIViewController {
     @objc
     func pageControlValueDidChange() {
         // Note: gesture swiping between pages is provided by `UIPageViewController` and not `UIPageControl`.
-        print("The page control changed its current page to \(pageControl.currentPage).")
+        Swift.debugPrint("The page control changed its current page to \(pageControl.currentPage).")
 
         colorView.backgroundColor = colors[pageControl.currentPage]
     }

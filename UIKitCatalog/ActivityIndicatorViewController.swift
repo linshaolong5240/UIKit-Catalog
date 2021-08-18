@@ -7,78 +7,75 @@ A view controller that demonstrates how to use `UIActivityIndicatorView`.
 
 import UIKit
 
-class ActivityIndicatorViewController: UITableViewController {
-    // MARK: - Properties
-
-    @IBOutlet weak var defaultSmallActivityIndicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var defaultLargeActivityIndicatorView: UIActivityIndicatorView!
+class ActivityIndicatorViewController: BaseTableViewController {
     
-    @IBOutlet weak var tintedSmallActivityIndicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var tintedLargeActivityIndicatorView: UIActivityIndicatorView!
+    // Cell identifier for each activity indicator table view cell.
+    enum ActivityIndicatorKind: String, CaseIterable {
+        case mediumIndicator
+        case largeIndicator
+        case mediumTintedIndicator
+        case largeTintedIndicator
+    }
     
-    // MARK: - View Life Cycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        testCells.append(contentsOf: [
+            CaseElement(title: NSLocalizedString("MediumIndicatorTitle", comment: ""),
+                        cellID: ActivityIndicatorKind.mediumIndicator.rawValue,
+                        configHandler: configureMediumActivityIndicatorView),
+            CaseElement(title: NSLocalizedString("LargeIndicatorTitle", comment: ""),
+                        cellID: ActivityIndicatorKind.largeIndicator.rawValue,
+                        configHandler: configureLargeActivityIndicatorView)
+        ])
         
-        configureDefaultActivityIndicatorView()
-        configureTintedActivityIndicatorView()
-        
-        // When the activity is done, be sure to use UIActivityIndicatorView.stopAnimating().
+        if traitCollection.userInterfaceIdiom != .mac {
+            // Tinted activity indicators available only on iOS.
+            testCells.append(contentsOf: [
+                CaseElement(title: NSLocalizedString("MediumTintedIndicatorTitle", comment: ""),
+                            cellID: ActivityIndicatorKind.mediumTintedIndicator.rawValue,
+                            configHandler: configureMediumTintedActivityIndicatorView),
+                CaseElement(title: NSLocalizedString("LargeTintedIndicatorTitle", comment: ""),
+                            cellID: ActivityIndicatorKind.largeTintedIndicator.rawValue,
+                            configHandler: configureLargeTintedActivityIndicatorView)
+            ])
+        }
     }
     
     // MARK: - Configuration
+    
+    func configureMediumActivityIndicatorView(_ activityIndicator: UIActivityIndicatorView) {
+        activityIndicator.style = UIActivityIndicatorView.Style.medium
+        activityIndicator.hidesWhenStopped = true
+        
+        activityIndicator.startAnimating()
+        // When the activity is done, be sure to use UIActivityIndicatorView.stopAnimating().
+    }
+    
+    func configureLargeActivityIndicatorView(_ activityIndicator: UIActivityIndicatorView) {
+        activityIndicator.style = UIActivityIndicatorView.Style.large
+        activityIndicator.hidesWhenStopped = true
 
-    func configureDefaultActivityIndicatorView() {
-        defaultSmallActivityIndicatorView.style = UIActivityIndicatorView.Style.medium
-        defaultLargeActivityIndicatorView.style = UIActivityIndicatorView.Style.large
-        
-        defaultSmallActivityIndicatorView.startAnimating()
-        defaultLargeActivityIndicatorView.startAnimating()
-        
-        defaultSmallActivityIndicatorView.hidesWhenStopped = true
-        defaultLargeActivityIndicatorView.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        // When the activity is done, be sure to use UIActivityIndicatorView.stopAnimating().
     }
     
-    func configureTintedActivityIndicatorView() {
-    	tintedSmallActivityIndicatorView.style = UIActivityIndicatorView.Style.medium
-        tintedLargeActivityIndicatorView.style = UIActivityIndicatorView.Style.large
-        
-        tintedSmallActivityIndicatorView.color = UIColor.systemPurple
-        tintedLargeActivityIndicatorView.color = UIColor.systemPurple
-        
-        tintedSmallActivityIndicatorView.startAnimating()
-        tintedLargeActivityIndicatorView.startAnimating()
+    func configureMediumTintedActivityIndicatorView(_ activityIndicator: UIActivityIndicatorView) {
+        activityIndicator.style = UIActivityIndicatorView.Style.medium
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = UIColor.systemPurple
+
+        activityIndicator.startAnimating()
+        // When the activity is done, be sure to use UIActivityIndicatorView.stopAnimating().
     }
     
-    // MARK: - UITableViewDataSource
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        #if targetEnvironment(macCatalyst)
-        // Don't show tinted activitiy indicator for macOS, it does not exist.
-        if section == 1 {
-            return ""
-        } else {
-            return super.tableView(tableView, titleForHeaderInSection: section)
-        }
-        #else
-        return super.tableView(tableView, titleForHeaderInSection: section)
-        #endif
+    func configureLargeTintedActivityIndicatorView(_ activityIndicator: UIActivityIndicatorView) {
+        activityIndicator.style = UIActivityIndicatorView.Style.large
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = UIColor.systemPurple
+
+        activityIndicator.startAnimating()
+        // When the activity is done, be sure to use UIActivityIndicatorView.stopAnimating().
     }
     
-    // MARK: - UITableViewDelegate
-    
-    override func tableView(_ tableView: UITableView,
-                            heightForRowAt indexPath: IndexPath) -> CGFloat {
-        #if targetEnvironment(macCatalyst)
-        // Don't show tinted activity indicator for macOS, it does not exist.
-        if indexPath.section == 1 {
-            return 0
-        } else {
-            return super.tableView(tableView, heightForRowAt: indexPath)
-        }
-        #else
-        return super.tableView(tableView, heightForRowAt: indexPath)
-        #endif
-    }
 }

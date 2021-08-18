@@ -29,6 +29,12 @@ class DatePickerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if #available(iOS 15, *) {
+            // In case the label's content is too large to fit inside the label (causing truncation),
+            // use this to reveal the label's full text drawn as a tool tip.
+            dateLabel.showsExpansionTextWhenTruncated = true
+        }
+        
         configureDatePicker()
     }
 

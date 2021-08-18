@@ -11,138 +11,146 @@ A view controller that demonstrates how to use `UIButton`.
 
 import UIKit
 
-class ButtonViewController: UITableViewController {
+class ButtonViewController: BaseTableViewController {
+    
+    // Cell identifier for each button table view cell.
+    enum ButtonKind: String, CaseIterable {
+        case buttonSystem
+        case buttonDetailDisclosure
+        case buttonSystemAddContact
+        case buttonClose
+        case buttonStyleGray
+        case buttonStyleTinted
+        case buttonStyleFilled
+        case buttonCornerStyle
+        case buttonToggle
+        case buttonTitleColor
+        case buttonImage
+        case buttonAttrText
+        case buttonSymbol
+        case buttonLargeSymbol
+        case buttonTextSymbol
+        case buttonSymbolText
+        case buttonMultiTitle
+        case buttonBackground
+        case addToCartButton
+        case buttonUpdateActivityHandler
+        case buttonUpdateHandler
+        case buttonImageUpdateHandler
+    }
+    
     // MARK: - Properties
 
-    @IBOutlet weak var systemTextButton: UIButton!
-    @IBOutlet weak var systemContactAddButton: UIButton!
-    @IBOutlet weak var systemDetailDisclosureButton: UIButton!
-    @IBOutlet weak var imageButton: UIButton!
-    @IBOutlet weak var attributedTextButton: UIButton!
-    @IBOutlet weak var symbolButton: UIButton!
-    @IBOutlet weak var symbolTextButton: UIButton!
-    @IBOutlet weak var menuButton: UIButton!
+    // "Add to Cart" Button
+    var cartItemCount: Int = 0
     
-    // MARK: - View Life Cycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // All of the buttons are created in the storyboard, but configured below.
-        configureSystemTextButton()
-        configureSystemContactAddButton()
-        configureSystemDetailDisclosureButton()
-        configureImageButton()
-        configureAttributedTextSystemButton()
-        configureSymbolButton()
-        configureSymbolTextButton()
-        configureMenuButton()
-    }
-
-    // MARK: - Configuration
-
-    func configureSystemTextButton() {
-        let buttonTitle = NSLocalizedString("Button", comment: "")
-
-        systemTextButton.setTitle(buttonTitle, for: .normal)
-
-        systemTextButton.addTarget(self, action: #selector(ButtonViewController.buttonClicked(_:)), for: .touchUpInside)
-    }
-
-    func configureSystemContactAddButton() {
-        systemContactAddButton.backgroundColor = UIColor.clear
-
-        systemContactAddButton.addTarget(self, action: #selector(ButtonViewController.buttonClicked(_:)), for: .touchUpInside)
-    }
-
-    func configureSystemDetailDisclosureButton() {
-        systemDetailDisclosureButton.backgroundColor = UIColor.clear
-
-        systemDetailDisclosureButton.addTarget(self, action: #selector(ButtonViewController.buttonClicked(_:)), for: .touchUpInside)
-    }
-
-    func configureImageButton() {
-        // To create this button in code you can use `UIButton.init(type: .system)`.
-
-        // Set the tint color to the button's image.
-        if let image = UIImage(named: "x_icon") {
-            let imageButtonNormalImage = image.withTintColor(.systemPurple)
-            imageButton.setImage(imageButtonNormalImage, for: .normal)
+        
+        testCells.append(contentsOf: [
+            CaseElement(title: NSLocalizedString("DefaultTitle", comment: ""),
+                        cellID: ButtonKind.buttonSystem.rawValue,
+                        configHandler: configureSystemTextButton),
+            CaseElement(title: NSLocalizedString("DetailDisclosureTitle", comment: ""),
+                        cellID: ButtonKind.buttonDetailDisclosure.rawValue,
+                        configHandler: configureSystemDetailDisclosureButton),
+            CaseElement(title: NSLocalizedString("AddContactTitle", comment: ""),
+                        cellID: ButtonKind.buttonSystemAddContact.rawValue,
+                        configHandler: configureSystemContactAddButton),
+            CaseElement(title: NSLocalizedString("CloseTitle", comment: ""),
+                        cellID: ButtonKind.buttonClose.rawValue,
+                        configHandler: configureCloseButton)
+        ])
+        
+       if #available(iOS 15, *) {
+            // These button styles are available on iOS 15 or later.
+            testCells.append(contentsOf: [
+                CaseElement(title: NSLocalizedString("GrayTitle", comment: ""),
+                            cellID: ButtonKind.buttonStyleGray.rawValue,
+                            configHandler: configureStyleGrayButton),
+                CaseElement(title: NSLocalizedString("TintedTitle", comment: ""),
+                            cellID: ButtonKind.buttonStyleTinted.rawValue,
+                            configHandler: configureStyleTintedButton),
+                CaseElement(title: NSLocalizedString("FilledTitle", comment: ""),
+                            cellID: ButtonKind.buttonStyleFilled.rawValue,
+                            configHandler: configureStyleFilledButton),
+                CaseElement(title: NSLocalizedString("CornerStyleTitle", comment: ""),
+                            cellID: ButtonKind.buttonCornerStyle.rawValue,
+                            configHandler: configureCornerStyleButton),
+                CaseElement(title: NSLocalizedString("ToggleTitle", comment: ""),
+                            cellID: ButtonKind.buttonToggle.rawValue,
+                            configHandler: configureToggleButton)
+            ])
         }
+
+        if traitCollection.userInterfaceIdiom != .mac {
+            // Colored button titles only on iOS.
+            testCells.append(contentsOf: [
+                CaseElement(title: NSLocalizedString("ButtonColorTitle", comment: ""),
+                            cellID: ButtonKind.buttonTitleColor.rawValue,
+                            configHandler: configureTitleTextButton)
+            ])
+        }
+
+        testCells.append(contentsOf: [
+            CaseElement(title: NSLocalizedString("ImageTitle", comment: ""),
+                        cellID: ButtonKind.buttonImage.rawValue,
+                        configHandler: configureImageButton),
+            CaseElement(title: NSLocalizedString("AttributedStringTitle", comment: ""),
+                        cellID: ButtonKind.buttonAttrText.rawValue,
+                        configHandler: configureAttributedTextSystemButton),
+            CaseElement(title: NSLocalizedString("SymbolTitle", comment: ""),
+                        cellID: ButtonKind.buttonSymbol.rawValue,
+                        configHandler: configureSymbolButton)
+        ])
+        
+        if #available(iOS 15, *) {
+            // This case uses UIButtonConfiguration which is available on iOS 15 or later.
+            if traitCollection.userInterfaceIdiom != .mac {
+                // UIButtonConfiguration for large images available only on iOS.
+                testCells.append(contentsOf: [
+                    CaseElement(title: NSLocalizedString("LargeSymbolTitle", comment: ""),
+                                cellID: ButtonKind.buttonLargeSymbol.rawValue,
+                                configHandler: configureLargeSymbolButton)
+                ])
+            }
+        }
+        
+        if #available(iOS 15, *) {
+            testCells.append(contentsOf: [
+                CaseElement(title: NSLocalizedString("StringSymbolTitle", comment: ""),
+                            cellID: ButtonKind.buttonTextSymbol.rawValue,
+                            configHandler: configureTextSymbolButton),
+                CaseElement(title: NSLocalizedString("SymbolStringTitle", comment: ""),
+                            cellID: ButtonKind.buttonSymbolText.rawValue,
+                            configHandler: configureSymbolTextButton),
                 
-        // Add an accessibility label to the image.
-        imageButton.accessibilityLabel = NSLocalizedString("X", comment: "")
-
-        imageButton.addTarget(self, action: #selector(ButtonViewController.buttonClicked(_:)), for: .touchUpInside)
-    }
-
-    func configureAttributedTextSystemButton() {
-        let buttonTitle = NSLocalizedString("Button", comment: "")
-        
-        // Set the button's title for normal state.
-		let normalTitleAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
-        ]
-        
-        let normalAttributedTitle = NSAttributedString(string: buttonTitle, attributes: normalTitleAttributes)
-        attributedTextButton.setAttributedTitle(normalAttributedTitle, for: .normal)
-
-        // Set the button's title for highlighted state.
-        let highlightedTitleAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: UIColor.systemGreen,
-            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.thick.rawValue
-        ]
-        let highlightedAttributedTitle = NSAttributedString(string: buttonTitle, attributes: highlightedTitleAttributes)
-        attributedTextButton.setAttributedTitle(highlightedAttributedTitle, for: .highlighted)
-
-        attributedTextButton.addTarget(self, action: #selector(ButtonViewController.buttonClicked(_:)), for: .touchUpInside)
-    }
-    
-    func configureSymbolButton() {
-        let buttonImage = UIImage(systemName: "person")
-        symbolButton.setImage(buttonImage, for: .normal)
-        
-        // Add an accessibility label to the image.
-        symbolButton.accessibilityLabel = NSLocalizedString("Person", comment: "")
-        
-        symbolButton.addTarget(self,
-                               action: #selector(ButtonViewController.buttonClicked(_:)),
-                               for: .touchUpInside)
-    }
-    
-    func configureSymbolTextButton() {
-        let buttonImage = UIImage(systemName: "person")
-        symbolTextButton.setImage(buttonImage, for: .normal)
-        
-        symbolTextButton.addTarget(self,
-                                   action: #selector(ButtonViewController.buttonClicked(_:)),
-                                   for: .touchUpInside)
-        
-        symbolTextButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-        let config = UIImage.SymbolConfiguration(textStyle: .body, scale: .small)
-        symbolTextButton.setPreferredSymbolConfiguration(config, forImageIn: .normal)
-    }
-    
-    func menuHandler(action: UIAction) {
-        Swift.debugPrint("Menu Action '\(action.title)'")
-    }
-    
-    func configureMenuButton() {
-        let buttonTitle = NSLocalizedString("Button", comment: "")
-        menuButton.setTitle(buttonTitle, for: .normal)
-
-        let items = (1...5).map {
-            UIAction(title: String(format: NSLocalizedString("ItemTitle", comment: ""), $0.description), handler: menuHandler)
+                CaseElement(title: NSLocalizedString("BackgroundTitle", comment: ""),
+                            cellID: ButtonKind.buttonBackground.rawValue,
+                            configHandler: configureBackgroundButton),
+                
+                // Multi-title button: title for normal and highlight state, setTitle(.highlighted) is for iOS 15 and later.
+                CaseElement(title: NSLocalizedString("MultiTitleTitle", comment: ""),
+                            cellID: ButtonKind.buttonMultiTitle.rawValue,
+                            configHandler: configureMultiTitleButton),
+                
+                // Various button effects done to the addToCartButton are available only on iOS 15 or later.
+                CaseElement(title: NSLocalizedString("AddToCartTitle", comment: ""),
+                            cellID: ButtonKind.addToCartButton.rawValue,
+                            configHandler: configureAddToCartButton),
+                
+                // UIButtonConfiguration with updateHandlers is available only on iOS 15 or later.
+                CaseElement(title: NSLocalizedString("UpdateActivityHandlerTitle", comment: ""),
+                            cellID: ButtonKind.buttonUpdateActivityHandler.rawValue,
+                            configHandler: configureUpdateActivityHandlerButton),
+                CaseElement(title: NSLocalizedString("UpdateHandlerTitle", comment: ""),
+                            cellID: ButtonKind.buttonUpdateHandler.rawValue,
+                            configHandler: configureUpdateHandlerButton),
+                CaseElement(title: NSLocalizedString("UpdateImageHandlerTitle", comment: ""),
+                            cellID: ButtonKind.buttonImageUpdateHandler.rawValue,
+                            configHandler: configureUpdateImageHandlerButton)
+            ])
         }
-        menuButton.menu = UIMenu(title: NSLocalizedString("ChooseItemTitle", comment: ""), children: items)
-        menuButton.showsMenuAsPrimaryAction = true
     }
-    
-    // MARK: - Actions
 
-    @objc
-    func buttonClicked(_ sender: UIButton) {
-        print("A button was clicked: \(sender).")
-    }
 }
-

@@ -39,6 +39,8 @@ class OutlineViewController: UIViewController {
     var dataSource: UICollectionViewDiffableDataSource<Section, OutlineItem>! = nil
     var outlineCollectionView: UICollectionView! = nil
 
+    private var detailTargetChangeObserver: Any? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,52 +50,68 @@ class OutlineViewController: UIViewController {
         // Add a translucent background to the primary view controller for the Mac.
         splitViewController!.primaryBackgroundStyle = .sidebar
         view.backgroundColor = UIColor.clear
-        
-        // Listen for when a split view controller is expanded or collapsed.
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(showDetailTargetDidChange(_:)),
-            name: UIViewController.showDetailTargetDidChangeNotification,
-            object: nil)
+          
+        // Listen for when the split view controller is expanded or collapsed for iPad multi-tasking,
+        // and on device rotate (iPhones that support regular size class).
+        detailTargetChangeObserver =
+            NotificationCenter.default.addObserver(forName: UIViewController.showDetailTargetDidChangeNotification,
+                                                   object: nil,
+                                                   queue: OperationQueue.main,
+                                                   using: { _ in
+                // Posted when a split view controller is expanded or collapsed.
+                                                                        
+                // Re-load the data source, the disclosure indicators need to change (push vs. present on a cell).
+                var snapshot = self.dataSource.snapshot()
+                snapshot.reloadItems(self.menuItems)
+                self.dataSource.apply(snapshot, animatingDifferences: false)
+            })
         
         if navigationController!.traitCollection.userInterfaceIdiom == .mac {
             navigationController!.navigationBar.isHidden = true
         }
     }
     
-    // Posted when a split view controller is expanded or collapsed.
-    @objc
-    func showDetailTargetDidChange(_ notification: NSNotification) {
-        // Reaload the data source, the disclosure indicators need to change (push vs. present on a cell).
-        var snapshot = dataSource.snapshot()
-        snapshot.reloadItems(menuItems)
-        dataSource.apply(snapshot, animatingDifferences: false)
-    }
-    
     deinit {
-        NotificationCenter.default.removeObserver(self, name: UIViewController.showDetailTargetDidChangeNotification, object: nil)
+        if let observer = detailTargetChangeObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     
     lazy var controlsOutlineItem: OutlineItem = {
-        var controlsSubItems = [
-            OutlineItem(title: NSLocalizedString("ButtonsTitle", comment: ""), imageName: nil,
+        
+        // Determine the content of the UIButton grouping.
+        var buttonItems = [
+            OutlineItem(title: NSLocalizedString("ButtonsTitle", comment: ""), imageName: "rectangle",
                         storyboardName: "ButtonViewController"),
+            OutlineItem(title: NSLocalizedString("MenuButtonsTitle", comment: ""), imageName: "list.bullet.rectangle",
+                        storyboardName: "MenuButtonViewController")
+        ]
+        // UIPointerInteraction to UIButtons is applied for iPad.
+        if navigationController!.traitCollection.userInterfaceIdiom == .pad {
+            buttonItems.append(contentsOf:
+                [OutlineItem(title: NSLocalizedString("PointerInteractionButtonsTitle", comment: ""),
+                             imageName: "cursorarrow.rays",
+                             storyboardName: "PointerInteractionButtonViewController") ])
+        }
+    
+        var controlsSubItems = [
+            OutlineItem(title: NSLocalizedString("ButtonsTitle", comment: ""), imageName: "rectangle.on.rectangle", subitems: buttonItems),
             
-            OutlineItem(title: NSLocalizedString("PageControlTitle", comment: ""), imageName: nil, subitems: [
+            OutlineItem(title: NSLocalizedString("PageControlTitle", comment: ""), imageName: "photo.on.rectangle", subitems: [
                 OutlineItem(title: NSLocalizedString("DefaultPageControlTitle", comment: ""), imageName: nil,
                             storyboardName: "DefaultPageControlViewController"),
                 OutlineItem(title: NSLocalizedString("CustomPageControlTitle", comment: ""), imageName: nil,
                             storyboardName: "CustomPageControlViewController")
             ]),
             
-            OutlineItem(title: NSLocalizedString("SearchBarsTitle", comment: ""), imageName: nil, subitems: [
+            OutlineItem(title: NSLocalizedString("SearchBarsTitle", comment: ""), imageName: "magnifyingglass", subitems: [
                 OutlineItem(title: NSLocalizedString("DefaultSearchBarTitle", comment: ""), imageName: nil,
                             storyboardName: "DefaultSearchBarViewController"),
                 OutlineItem(title: NSLocalizedString("CustomSearchBarTitle", comment: ""), imageName: nil,
                             storyboardName: "CustomSearchBarViewController")
             ]),
             
-            OutlineItem(title: NSLocalizedString("SegmentedControlsTitle", comment: ""), imageName: nil,
+            OutlineItem(title: NSLocalizedString("SegmentedControlsTitle", comment: ""), imageName: "square.split.3x1",
                         storyboardName: "SegmentedControlViewController"),
             OutlineItem(title: NSLocalizedString("SlidersTitle", comment: ""), imageName: nil,
                         storyboardName: "SliderViewController"),
@@ -103,15 +121,12 @@ class OutlineViewController: UIViewController {
                         storyboardName: "TextFieldViewController")
         ]
         
-        #if !targetEnvironment(macCatalyst)
-        /** Because this sample has "Optimize Interface for Mac" turned on -
-            UIStepper class is not supported when running Mac Catalyst apps in the Mac idiom.
-        */
-        let stepperItem =
-            OutlineItem(title: NSLocalizedString("SteppersTitle", comment: ""), imageName: nil,
-                        storyboardName: "StepperViewController")
-        controlsSubItems.append(stepperItem)
-        #endif
+        if traitCollection.userInterfaceIdiom != .mac {
+            // UIStepper class is not supported when running Mac Catalyst apps in the Mac idiom.
+            let stepperItem =
+                OutlineItem(title: NSLocalizedString("SteppersTitle", comment: ""), imageName: nil, storyboardName: "StepperViewController")
+            controlsSubItems.append(stepperItem)
+        }
         
         return OutlineItem(title: "Controls", imageName: "slider.horizontal.3", subitems: controlsSubItems)
     }()
@@ -128,15 +143,13 @@ class OutlineViewController: UIViewController {
                         storyboardName: "ImagePickerViewController")
         ]
         
-        #if !targetEnvironment(macCatalyst)
-        /** Because this sample has "Optimize Interface for Mac" turned on -
-            UIPickerView class is not supported when running Mac Catalyst apps in the Mac idiom.
-        */
-        let pickerViewItem =
-            OutlineItem(title: NSLocalizedString("PickerViewTitle", comment: ""), imageName: nil,
-                        storyboardName: "PickerViewController")
-        pickerSubItems.append(pickerViewItem)
-        #endif
+        if traitCollection.userInterfaceIdiom != .mac {
+            // UIPickerView class is not supported when running Mac Catalyst apps in the Mac idiom.
+            // To use a picker in macOS, use UIButton with changesSelectionAsPrimaryAction set to "true".
+            let pickerViewItem =
+                OutlineItem(title: NSLocalizedString("PickerViewTitle", comment: ""), imageName: nil, storyboardName: "PickerViewController")
+            pickerSubItems.append(pickerViewItem)
+        }
         
         return OutlineItem(title: "Pickers", imageName: "list.bullet", subitems: pickerSubItems)
     }()
@@ -147,14 +160,22 @@ class OutlineViewController: UIViewController {
                         storyboardName: "ActivityIndicatorViewController"),
             OutlineItem(title: NSLocalizedString("AlertControllersTitle", comment: ""), imageName: nil,
                         storyboardName: "AlertControllerViewController"),
-            OutlineItem(title: NSLocalizedString("ImageViewTitle", comment: ""), imageName: nil,
-                        storyboardName: "ImageViewController"),
+            OutlineItem(title: NSLocalizedString("TextViewTitle", comment: ""), imageName: nil,
+                        storyboardName: "TextViewController"),
+            
+            OutlineItem(title: NSLocalizedString("ImagesTitle", comment: ""), imageName: "photo", subitems: [
+                OutlineItem(title: NSLocalizedString("ImageViewTitle", comment: ""), imageName: nil,
+                            storyboardName: "ImageViewController"),
+                OutlineItem(title: NSLocalizedString("SymbolsTitle", comment: ""), imageName: nil,
+                            storyboardName: "SymbolViewController")
+            ]),
+            
             OutlineItem(title: NSLocalizedString("ProgressViewsTitle", comment: ""), imageName: nil,
                         storyboardName: "ProgressViewController"),
             OutlineItem(title: NSLocalizedString("StackViewsTitle", comment: ""), imageName: nil,
                         storyboardName: "StackViewController"),
             
-            OutlineItem(title: NSLocalizedString("ToolbarsTitle", comment: ""), imageName: nil, subitems: [
+            OutlineItem(title: NSLocalizedString("ToolbarsTitle", comment: ""), imageName: "hammer", subitems: [
                 OutlineItem(title: NSLocalizedString("DefaultToolBarTitle", comment: ""), imageName: nil,
                             storyboardName: "DefaultToolbarViewController"),
                 OutlineItem(title: NSLocalizedString("TintedToolbarTitle", comment: ""), imageName: nil,
@@ -163,8 +184,9 @@ class OutlineViewController: UIViewController {
                             storyboardName: "CustomToolbarViewController")
             ]),
             
-            OutlineItem(title: NSLocalizedString("WebViewTitle", comment: ""), imageName: nil,
-                        storyboardName: "WebViewController")
+            OutlineItem(title: NSLocalizedString("VisualEffectTitle", comment: ""), imageName: nil, storyboardName: "VisualEffectViewController"),
+            
+            OutlineItem(title: NSLocalizedString("WebViewTitle", comment: ""), imageName: nil, storyboardName: "WebViewController")
         ])
     }()
     
@@ -198,24 +220,29 @@ extension OutlineViewController {
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = menuItem.title
            
-            if menuItem.imageName != nil {
-                contentConfiguration.image = UIImage(systemName: menuItem.imageName!)
+            if let image = menuItem.imageName {
+                contentConfiguration.image = UIImage(systemName: image)
             }
             
             contentConfiguration.textProperties.font = .preferredFont(forTextStyle: .headline)
             cell.contentConfiguration = contentConfiguration
             
             let disclosureOptions = UICellAccessory.OutlineDisclosureOptions(style: .header)
-            cell.accessories = [.outlineDisclosure(options:disclosureOptions)]
+            cell.accessories = [.outlineDisclosure(options: disclosureOptions)]
             
             let background = UIBackgroundConfiguration.clear()
             cell.backgroundConfiguration = background
         }
         
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, OutlineItem> { cell, indexPath, menuItem in
-            var content = UIListContentConfiguration.cell()
-            content.text = menuItem.title
-            cell.contentConfiguration = content
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = menuItem.title
+            
+            if let image = menuItem.imageName {
+                contentConfiguration.image = UIImage(systemName: image)
+            }
+            
+            cell.contentConfiguration = contentConfiguration
             
             let background = UIBackgroundConfiguration.clear()
             cell.backgroundConfiguration = background
@@ -295,6 +322,14 @@ extension OutlineViewController: UICollectionViewDelegate {
     
         if let storyboardName = menuItem.storyboardName {
             pushOrPresentStoryboard(storyboardName: storyboardName)
+            
+            if navigationController!.traitCollection.userInterfaceIdiom == .mac {
+                if let windowScene = view.window?.windowScene {
+                    if #available(iOS 15, *) {
+                        windowScene.subtitle = menuItem.title
+                    }
+                }
+            }
         }
     }
     

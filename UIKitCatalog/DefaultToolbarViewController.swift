@@ -55,6 +55,6 @@ class DefaultToolbarViewController: UIViewController {
 
     @objc
     func barButtonItemClicked(_ barButtonItem: UIBarButtonItem) {
-        print("A bar button item on the default toolbar was clicked: \(barButtonItem).")
+        Swift.debugPrint("A bar button item on the default toolbar was clicked: \(barButtonItem).")
     }
 }

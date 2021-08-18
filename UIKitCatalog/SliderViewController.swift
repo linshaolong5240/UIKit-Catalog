@@ -7,98 +7,139 @@ A view controller that demonstrates how to use `UISlider`.
 
 import UIKit
 
-class SliderViewController: UITableViewController {
-    // MARK: - Properties
+class SliderViewController: BaseTableViewController {
+    // Cell identifier for each slider table view cell.
+    enum SliderKind: String, CaseIterable {
+        case sliderDefault
+        case sliderTinted
+        case sliderCustom
+        case sliderMaxMinImage
+    }
 
-    @IBOutlet weak var defaultSlider: UISlider!
-    @IBOutlet weak var tintedSlider: UISlider!
-    @IBOutlet weak var customSlider: UISlider!
-    @IBOutlet weak var minMaxImageSlider: UISlider!
-    
     // MARK: - View Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureDefaultSlider()
-        #if !targetEnvironment(macCatalyst)
-        /** Only show for the first table cell (default slider).
-            Because this sample has "Optimize Interface for Mac" turned on -
-            UISlider class: tinted, custom, and max/min image, are not supported when running Mac Catalyst apps in the Mac idiom.
-        */
-        configureTintedSlider()
-        configureCustomSlider()
-        configureMinMaxImageSlider()
-        #endif
+        testCells.append(contentsOf: [
+            CaseElement(title: NSLocalizedString("DefaultTitle", comment: ""),
+                        cellID: SliderKind.sliderDefault.rawValue,
+                        configHandler: configureDefaultSlider)
+        ])
+        
+        if #available(iOS 15, *) {
+            // These cases require iOS 15 or later when running on Mac Catalyst.
+            testCells.append(contentsOf: [
+                CaseElement(title: NSLocalizedString("CustomTitle", comment: ""),
+                            cellID: SliderKind.sliderCustom.rawValue,
+                            configHandler: configureCustomSlider)
+            ])
+            testCells.append(contentsOf: [
+                CaseElement(title: NSLocalizedString("MinMaxImagesTitle", comment: ""),
+                            cellID: SliderKind.sliderMaxMinImage.rawValue,
+                            configHandler: configureMinMaxImageSlider)
+            ])
+            testCells.append(contentsOf: [
+                CaseElement(title: NSLocalizedString("TintedTitle", comment: ""),
+                            cellID: SliderKind.sliderTinted.rawValue,
+                            configHandler: configureTintedSlider)
+            ])
+        }
     }
 
     // MARK: - Configuration
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        #if targetEnvironment(macCatalyst)
-        /** Only show for the first table cell (default slider).
-            Because this sample has "Optimize Interface for Mac" turned on -
-            UISlider class: tinted, custom, and max/min image, are not supported when running Mac Catalyst apps in the Mac idiom.
+
+    func configureDefaultSlider(_ slider: UISlider) {
+        slider.minimumValue = 0
+        slider.maximumValue = 100
+        slider.value = 42
+        slider.isContinuous = true
+
+        slider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
+    }
+
+    @available(iOS 15.0, *)
+    func configureTintedSlider(slider: UISlider) {
+        /** To keep the look the same betwen iOS and macOS:
+            For minimumTrackTintColor, maximumTrackTintColor to work in Mac Catalyst, use UIBehavioralStyle as ".pad",
+            Available in macOS 12 or later (Mac Catalyst 15.0 or later).
+            Use this for controls that need to look the same between iOS and macOS.
         */
-        return 1
-        #else
-        return super.numberOfSections(in: tableView)
-        #endif
-    }
-    
-    func configureDefaultSlider() {
-        defaultSlider.minimumValue = 0
-        defaultSlider.maximumValue = 100
-        defaultSlider.value = 42
-        defaultSlider.isContinuous = true
+        if traitCollection.userInterfaceIdiom == .mac {
+            slider.preferredBehavioralStyle = .pad
+        }
 
-        defaultSlider.addTarget(self,
-                                action: #selector(SliderViewController.sliderValueDidChange(_:)),
-                                for: .valueChanged)
+        slider.minimumTrackTintColor = UIColor.systemBlue
+        slider.maximumTrackTintColor = UIColor.systemPurple
+        
+        slider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
     }
 
-    func configureTintedSlider() {
-        tintedSlider.minimumTrackTintColor = UIColor.systemBlue
-        tintedSlider.maximumTrackTintColor = UIColor.systemPurple
-
-        tintedSlider.addTarget(self,
-                               action: #selector(SliderViewController.sliderValueDidChange(_:)),
-                               for: .valueChanged)
-    }
-
-    func configureCustomSlider() {
+    @available(iOS 15.0, *)
+    func configureCustomSlider(slider: UISlider) {
+        /** To keep the look the same betwen iOS and macOS:
+            For setMinimumTrackImage, setMaximumTrackImage, setThumbImage to work in Mac Catalyst, use UIBehavioralStyle as ".pad",
+            Available in macOS 12 or later (Mac Catalyst 15.0 or later).
+            Use this for controls that need to look the same between iOS and macOS.
+        */
+        if traitCollection.userInterfaceIdiom == .mac {
+            slider.preferredBehavioralStyle = .pad
+        }
+        
         let leftTrackImage = UIImage(named: "slider_blue_track")
-        customSlider.setMinimumTrackImage(leftTrackImage, for: .normal)
+        slider.setMinimumTrackImage(leftTrackImage, for: .normal)
 
         let rightTrackImage = UIImage(named: "slider_green_track")
-        customSlider.setMaximumTrackImage(rightTrackImage, for: .normal)
+        slider.setMaximumTrackImage(rightTrackImage, for: .normal)
 
         // Set the sliding thumb image (normal and highlighted).
-        let thumbImageConfig = UIImage.SymbolConfiguration(scale: .large)
+        //
+        // For fun, choose a different image symbol configuraton for the thumb's image between macOS and iOS.
+        var thumbImageConfig: UIImage.SymbolConfiguration
+        if slider.traitCollection.userInterfaceIdiom == .mac {
+            thumbImageConfig = UIImage.SymbolConfiguration(scale: .large)
+        } else {
+            thumbImageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .heavy, scale: .large)
+        }
         let thumbImage = UIImage(systemName: "circle.fill", withConfiguration: thumbImageConfig)
-        customSlider.setThumbImage(thumbImage, for: .normal)
+        slider.setThumbImage(thumbImage, for: .normal)
+        
         let thumbImageHighlighted = UIImage(systemName: "circle", withConfiguration: thumbImageConfig)
-        customSlider.setThumbImage(thumbImageHighlighted, for: .highlighted)
+        slider.setThumbImage(thumbImageHighlighted, for: .highlighted)
 
-        customSlider.minimumValue = 0
-        customSlider.maximumValue = 100
-        customSlider.isContinuous = false
-        customSlider.value = 84
+        // Set the rest of the slider's attributes.
+        slider.minimumValue = 0
+        slider.maximumValue = 100
+        slider.isContinuous = false
+        slider.value = 84
 
-        customSlider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
+        slider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
     }
     
-    func configureMinMaxImageSlider() {
-        minMaxImageSlider.minimumValueImage = UIImage(systemName: "tortoise")
-        minMaxImageSlider.maximumValueImage = UIImage(systemName: "hare")
+    func configureMinMaxImageSlider(slider: UISlider) {
+        /** To keep the look the same betwen iOS and macOS:
+            For setMinimumValueImage, setMaximumValueImage to work in Mac Catalyst, use UIBehavioralStyle as ".pad",
+            Available in macOS 12 or later (Mac Catalyst 15.0 or later).
+            Use this for controls that need to look the same between iOS and macOS.
+        */
+        if #available(iOS 15, *) {
+            if traitCollection.userInterfaceIdiom == .mac {
+                slider.preferredBehavioralStyle = .pad
+            }
+        }
         
-        minMaxImageSlider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
+        slider.minimumValueImage = UIImage(systemName: "tortoise")
+        slider.maximumValueImage = UIImage(systemName: "hare")
+        
+        slider.addTarget(self, action: #selector(SliderViewController.sliderValueDidChange(_:)), for: .valueChanged)
     }
     
     // MARK: - Actions
 
     @objc
     func sliderValueDidChange(_ slider: UISlider) {
-        print("A slider changed its value: \(slider).")
+        let formattedValue = String(format: "%.2f", slider.value)
+        Swift.debugPrint("Slider changed its value: \(formattedValue)")
     }
+
 }

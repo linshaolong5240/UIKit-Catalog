@@ -7,90 +7,114 @@ A view controller that demonstrates how to use `UITextField`.
 
 import UIKit
 
-class TextFieldViewController: UITableViewController {
-    // MARK: - Properties
-
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var tintedTextField: UITextField!
-    @IBOutlet weak var secureTextField: UITextField!
-    @IBOutlet weak var specificKeyboardTextField: UITextField!
-    @IBOutlet weak var customTextField: UITextField!
-    @IBOutlet weak var searchTextField: CustomTextField!
+class TextFieldViewController: BaseTableViewController {
     
-    // MARK: View Life Cycle
+    // Cell identifier for each text field table view cell.
+    enum TextFieldKind: String, CaseIterable {
+        case textField
+        case tintedTextField
+        case secureTextField
+        case specificKeyboardTextField
+        case customTextField
+        case searchTextField
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureTextField()
-        configureTintedTextField()
-        configureSecureTextField()
-        configureSpecificKeyboardTextField()
-        configureCustomTextField()
-        configureSearchTextField()
+        testCells.append(contentsOf: [
+            CaseElement(title: NSLocalizedString("DefaultTextFieldTitle", comment: ""),
+                        cellID: TextFieldKind.textField.rawValue,
+                        configHandler: configureTextField),
+            CaseElement(title: NSLocalizedString("TintedTextFieldTitle", comment: ""),
+                        cellID: TextFieldKind.tintedTextField.rawValue,
+                        configHandler: configureTintedTextField),
+            CaseElement(title: NSLocalizedString("SecuretTextFieldTitle", comment: ""),
+                        cellID: TextFieldKind.secureTextField.rawValue,
+                        configHandler: configureSecureTextField),
+            CaseElement(title: NSLocalizedString("SearchTextFieldTitle", comment: ""),
+                        cellID: TextFieldKind.searchTextField.rawValue,
+                        configHandler: configureSearchTextField)
+        ])
+        
+        if traitCollection.userInterfaceIdiom != .mac {
+            testCells.append(contentsOf: [
+                // Show text field with specific kind of keyboard for iOS only.
+                CaseElement(title: NSLocalizedString("SpecificKeyboardTextFieldTitle", comment: ""),
+                            cellID: TextFieldKind.specificKeyboardTextField.rawValue,
+                            configHandler: configureSpecificKeyboardTextField),
+                
+                // Show text field with custom background for iOS only.
+                CaseElement(title: NSLocalizedString("CustomTextFieldTitle", comment: ""),
+                            cellID: TextFieldKind.customTextField.rawValue,
+                            configHandler: configureCustomTextField)
+            ])
+        }
     }
-    
+
     // MARK: - Configuration
 
-    func configureTextField() {
+    func configureTextField(_ textField: UITextField) {
         textField.placeholder = NSLocalizedString("Placeholder text", comment: "")
         textField.autocorrectionType = .yes
         textField.returnKeyType = .done
         textField.clearButtonMode = .whileEditing
     }
 
-    func configureTintedTextField() {
-        tintedTextField.tintColor = UIColor.systemBlue
-        tintedTextField.textColor = UIColor.systemGreen
+    func configureTintedTextField(_ textField: UITextField) {
+        textField.tintColor = UIColor.systemBlue
+        textField.textColor = UIColor.systemGreen
 
-        tintedTextField.placeholder = NSLocalizedString("Placeholder text", comment: "")
-        tintedTextField.returnKeyType = .done
-        tintedTextField.clearButtonMode = .never
+        textField.placeholder = NSLocalizedString("Placeholder text", comment: "")
+        textField.returnKeyType = .done
+        textField.clearButtonMode = .never
     }
 
-    func configureSecureTextField() {
-        secureTextField.isSecureTextEntry = true
+    func configureSecureTextField(_ textField: UITextField) {
+        textField.isSecureTextEntry = true
 
-        secureTextField.placeholder = NSLocalizedString("Placeholder text", comment: "")
-        secureTextField.returnKeyType = .done
-        secureTextField.clearButtonMode = .always
+        textField.placeholder = NSLocalizedString("Placeholder text", comment: "")
+        textField.returnKeyType = .done
+        textField.clearButtonMode = .always
     }
     
-    func configureSearchTextField() {
-        searchTextField.placeholder = NSLocalizedString("Enter search text", comment: "")
-        searchTextField.returnKeyType = .done
-        searchTextField.clearButtonMode = .always
-        searchTextField.allowsDeletingTokens = true
+    func configureSearchTextField(_ textField: UITextField) {
+        if let searchField = textField as? UISearchTextField {
+            searchField.placeholder = NSLocalizedString("Enter search text", comment: "")
+            searchField.returnKeyType = .done
+            searchField.clearButtonMode = .always
+            searchField.allowsDeletingTokens = true
+            
+            // Setup the left view as a symbol image view.
+            let searchIcon = UIImageView(image: UIImage(systemName: "magnifyingglass"))
+            searchIcon.tintColor = UIColor.systemGray
+            searchField.leftView = searchIcon
+            searchField.leftViewMode = .always
         
-        // Setup the left view as a symbol image view.
-        let searchIcon = UIImageView(image: UIImage(systemName: "magnifyingglass"))
-        searchIcon.tintColor = UIColor.systemGray
-        searchTextField.leftView = searchIcon
-        searchTextField.leftViewMode = .always
-    
-        let secondToken = UISearchToken(icon: UIImage(systemName: "staroflife"), text: "Token 2")
-        searchTextField.insertToken(secondToken, at: 0)
-        
-        let firstToken = UISearchToken(icon: UIImage(systemName: "staroflife.fill"), text: "Token 1")
-        searchTextField.insertToken(firstToken, at: 0)
+            let secondToken = UISearchToken(icon: UIImage(systemName: "staroflife"), text: "Token 2")
+            searchField.insertToken(secondToken, at: 0)
+            
+            let firstToken = UISearchToken(icon: UIImage(systemName: "staroflife.fill"), text: "Token 1")
+            searchField.insertToken(firstToken, at: 0)
+        }
     }
 
     /**	There are many different types of keyboards that you may choose to use.
         The different types of keyboards are defined in the `UITextInputTraits` interface.
         This example shows how to display a keyboard to help enter email addresses.
     */
-    func configureSpecificKeyboardTextField() {
-        specificKeyboardTextField.keyboardType = .emailAddress
+    func configureSpecificKeyboardTextField(_ textField: UITextField) {
+        textField.keyboardType = .emailAddress
 
-        specificKeyboardTextField.placeholder = NSLocalizedString("Placeholder text", comment: "")
-        specificKeyboardTextField.returnKeyType = .done
+        textField.placeholder = NSLocalizedString("Placeholder text", comment: "")
+        textField.returnKeyType = .done
     }
 
-    func configureCustomTextField() {
+    func configureCustomTextField(_ textField: UITextField) {
         // Text fields with custom image backgrounds must have no border.
-        customTextField.borderStyle = .none
+        textField.borderStyle = .none
 
-        customTextField.background = UIImage(named: "text_field_background")
+        textField.background = UIImage(named: "text_field_background")
 
         // Create a purple button to be used as the right view of the custom text field.
         let purpleImage = UIImage(named: "text_field_purple_right_view")!
@@ -99,51 +123,20 @@ class TextFieldViewController: UITableViewController {
         purpleImageButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
         purpleImageButton.setImage(purpleImage, for: .normal)
         purpleImageButton.addTarget(self, action: #selector(TextFieldViewController.customTextFieldPurpleButtonClicked), for: .touchUpInside)
-        customTextField.rightView = purpleImageButton
-        customTextField.rightViewMode = .always
+        textField.rightView = purpleImageButton
+        textField.rightViewMode = .always
 
-        customTextField.placeholder = NSLocalizedString("Placeholder text", comment: "")
-        customTextField.autocorrectionType = .no
-        customTextField.clearButtonMode = .never
-        customTextField.returnKeyType = .done
+        textField.placeholder = NSLocalizedString("Placeholder text", comment: "")
+        textField.autocorrectionType = .no
+        textField.clearButtonMode = .never
+        textField.returnKeyType = .done
     }
 	
     // MARK: - Actions
     
     @objc
     func customTextFieldPurpleButtonClicked() {
-        print("The custom text field's purple right view button was clicked.")
-    }
-    
-    // MARK: - UITableViewDataSource
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        #if targetEnvironment(macCatalyst)
-        // Don't show text field with custom background for macOS, it does not exist.
-        if section == 4 {
-            return ""
-        } else {
-            return super.tableView(tableView, titleForHeaderInSection: section)
-        }
-        #else
-        return super.tableView(tableView, titleForHeaderInSection: section)
-        #endif
-    }
-
-    // MARK: - UITableViewDelegate
-
-    override func tableView(_ tableView: UITableView,
-                            heightForRowAt indexPath: IndexPath) -> CGFloat {
-        #if targetEnvironment(macCatalyst)
-        // Don't show text field with custom background for macOS, it does not exist.
-        if indexPath.section == 4 {
-            return 0
-        } else {
-            return super.tableView(tableView, heightForRowAt: indexPath)
-        }
-        #else
-        return super.tableView(tableView, heightForRowAt: indexPath)
-        #endif
+        Swift.debugPrint("The custom text field's purple right view button was clicked.")
     }
 
 }
@@ -167,18 +160,21 @@ extension TextFieldViewController: UITextFieldDelegate {
 }
 
 // Custom text field for controlling input text placement.
-class CustomTextField: UISearchTextField {
+class CustomTextField: UITextField {
     let leftMarginPadding: CGFloat = 12
-
+    let rightMarginPadding: CGFloat = 36
+    
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         var rect = bounds
         rect.origin.x += leftMarginPadding
+        rect.size.width -= rightMarginPadding
         return rect
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         var rect = bounds
         rect.origin.x += leftMarginPadding
+        rect.size.width -= rightMarginPadding
         return rect
     }
     

@@ -7,76 +7,117 @@ A view controller that demonstrates how to use `UISegmentedControl`.
 
 import UIKit
 
-class SegmentedControlViewController: UITableViewController {
-    // MARK: - Properties
-
-    @IBOutlet weak var defaultSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var tintedSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var customSegmentsSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var customBackgroundSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var actionBasedSegmentedControl: UISegmentedControl!
+class SegmentedControlViewController: BaseTableViewController {
+    
+    // Cell identifier for each segmented control table view cell.
+    enum SegmentKind: String, CaseIterable {
+        case segmentDefault
+        case segmentTinted
+        case segmentCustom
+        case segmentCustomBackground
+        case segmentAction
+    }
     
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureDefaultSegmentedControl()
-        configureTintedSegmentedControl()
-        configureCustomSegmentsSegmentedControl()
-        configureCustomBackgroundSegmentedControl()
-        configureActionBasedSegmentedControl()
+        testCells.append(contentsOf: [
+            CaseElement(title: NSLocalizedString("DefaultTitle", comment: ""),
+                        cellID: SegmentKind.segmentDefault.rawValue,
+                        configHandler: configureDefaultSegmentedControl),
+            CaseElement(title: NSLocalizedString("CustomSegmentsTitle", comment: ""),
+                        cellID: SegmentKind.segmentCustom.rawValue,
+                        configHandler: configureCustomSegmentsSegmentedControl),
+            CaseElement(title: NSLocalizedString("CustomBackgroundTitle", comment: ""),
+                        cellID: SegmentKind.segmentCustomBackground.rawValue,
+                        configHandler: configureCustomBackgroundSegmentedControl),
+            CaseElement(title: NSLocalizedString("ActionBasedTitle", comment: ""),
+                        cellID: SegmentKind.segmentAction.rawValue,
+                        configHandler: configureActionBasedSegmentedControl)
+        ])
+        if self.traitCollection.userInterfaceIdiom != .mac {
+            // Tinted segmented control is only available on iOS.
+            testCells.append(contentsOf: [
+                CaseElement(title: "Tinted",
+                            cellID: SegmentKind.segmentTinted.rawValue,
+                            configHandler: configureTintedSegmentedControl)
+            ])
+        }
     }
 
     // MARK: - Configuration
 
-    func configureDefaultSegmentedControl() {
+    func configureDefaultSegmentedControl(_ segmentedControl: UISegmentedControl) {
         // As a demonstration, disable the first segment.
-        defaultSegmentedControl.setEnabled(false, forSegmentAt: 0)
+        segmentedControl.setEnabled(false, forSegmentAt: 0)
 
-        defaultSegmentedControl.addTarget(self, action: #selector(SegmentedControlViewController.selectedSegmentDidChange(_:)), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(SegmentedControlViewController.selectedSegmentDidChange(_:)), for: .valueChanged)
     }
 
-    func configureTintedSegmentedControl() {
-        // Use a dynamic tinted color (separate one for Light Appearance and separate one for Dark Appearance).
-        tintedSegmentedControl.selectedSegmentTintColor = UIColor(named: "tinted_segmented_control")!
+    func configureTintedSegmentedControl(_ segmentedControl: UISegmentedControl) {
+        // Use a dynamic tinted "green" color (separate one for Light Appearance and separate one for Dark Appearance).
+        segmentedControl.selectedSegmentTintColor = UIColor(named: "tinted_segmented_control")!
+        segmentedControl.selectedSegmentIndex = 1
 
-        tintedSegmentedControl.selectedSegmentIndex = 1
-
-        tintedSegmentedControl.addTarget(self, action: #selector(SegmentedControlViewController.selectedSegmentDidChange(_:)), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(SegmentedControlViewController.selectedSegmentDidChange(_:)), for: .valueChanged)
     }
     
-    func configureCustomSegmentsSegmentedControl() {
+    func configureCustomSegmentsSegmentedControl(_ segmentedControl: UISegmentedControl) {
         let airplaneImage = UIImage(systemName: "airplane")
         airplaneImage?.accessibilityLabel = NSLocalizedString("Airplane", comment: "")
-        customSegmentsSegmentedControl.setImage(airplaneImage, forSegmentAt: 0)
+        segmentedControl.setImage(airplaneImage, forSegmentAt: 0)
         
         let giftImage = UIImage(systemName: "gift")
         giftImage?.accessibilityLabel = NSLocalizedString("Gift", comment: "")
-        customSegmentsSegmentedControl.setImage(giftImage, forSegmentAt: 1)
+        segmentedControl.setImage(giftImage, forSegmentAt: 1)
         
         let burstImage = UIImage(systemName: "burst")
         burstImage?.accessibilityLabel = NSLocalizedString("Burst", comment: "")
-        customSegmentsSegmentedControl.setImage(burstImage, forSegmentAt: 2)
+        segmentedControl.setImage(burstImage, forSegmentAt: 2)
         
-        customSegmentsSegmentedControl.selectedSegmentIndex = 0
+        segmentedControl.selectedSegmentIndex = 0
 
-        customSegmentsSegmentedControl.addTarget(self,
-                                                 action: #selector(SegmentedControlViewController.selectedSegmentDidChange(_:)),
-                                                 for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(SegmentedControlViewController.selectedSegmentDidChange(_:)), for: .valueChanged)
     }
     
-    func configureCustomBackgroundSegmentedControl() {
+    // Utility function to resize an image to a particular size.
+    func scaledImage(_ image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    // Configure the segmented control with a background image, dividers, and custom font.
+    // The background image first needs to be sized to match the control's size.
+    //
+    func configureCustomBackgroundSegmentedControl(_ placeHolderView: UIView) {
+        let customBackgroundSegmentedControl =
+            UISegmentedControl(items: [NSLocalizedString("CheckTitle", comment: ""),
+                                       NSLocalizedString("SearchTitle", comment: ""),
+                                       NSLocalizedString("ToolsTitle", comment: "")])
         customBackgroundSegmentedControl.selectedSegmentIndex = 2
-
+        
+        // Place this custom segmented control within the placeholder view.
+        customBackgroundSegmentedControl.frame.size.width = placeHolderView.frame.size.width
+        customBackgroundSegmentedControl.frame.origin.y =
+            (placeHolderView.bounds.size.height - customBackgroundSegmentedControl.bounds.size.height) / 2
+        placeHolderView.addSubview(customBackgroundSegmentedControl)
+    
         // Set the background images for each control state.
-        let normalSegmentBackgroundImage = UIImage(named: "stepper_and_segment_background")
-        customBackgroundSegmentedControl.setBackgroundImage(normalSegmentBackgroundImage, for: .normal, barMetrics: .default)
-
-        let disabledSegmentBackgroundImage = UIImage(named: "stepper_and_segment_background_disabled")
+        let normalSegmentBackgroundImage = UIImage(named: "background")
+        // Size the background image to match the bounds of the segmented control.
+        let backgroundImageSize = customBackgroundSegmentedControl.bounds.size
+        let newBackgroundImageSize = scaledImage(normalSegmentBackgroundImage!, scaledToSize: backgroundImageSize)
+        customBackgroundSegmentedControl.setBackgroundImage(newBackgroundImageSize, for: .normal, barMetrics: .default)
+        
+        let disabledSegmentBackgroundImage = UIImage(named: "background_disabled")
         customBackgroundSegmentedControl.setBackgroundImage(disabledSegmentBackgroundImage, for: .disabled, barMetrics: .default)
 
-        let highlightedSegmentBackgroundImage = UIImage(named: "stepper_and_segment_background_highlighted")
+        let highlightedSegmentBackgroundImage = UIImage(named: "background_highlighted")
         customBackgroundSegmentedControl.setBackgroundImage(highlightedSegmentBackgroundImage, for: .highlighted, barMetrics: .default)
 
         // Set the divider image.
@@ -87,9 +128,7 @@ class SegmentedControlViewController: UITableViewController {
                                                          barMetrics: .default)
 
         // Create a font to use for the attributed title, for both normal and highlighted states.
-        let captionFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption1)
-        let font = UIFont(descriptor: captionFontDescriptor, size: 0)
-
+        let font = UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body), size: 0)
         let normalTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.systemPurple,
             NSAttributedString.Key.font: font
@@ -107,60 +146,44 @@ class SegmentedControlViewController: UITableViewController {
                                                    for: .valueChanged)
     }
 
-    func configureActionBasedSegmentedControl() {
-        actionBasedSegmentedControl.selectedSegmentIndex = 0
+    func configureActionBasedSegmentedControl(_ segmentedControl: UISegmentedControl) {
+        segmentedControl.selectedSegmentIndex = 0
         let firstAction =
             UIAction(title: NSLocalizedString("CheckTitle", comment: "")) { action in
                 Swift.debugPrint("Segment Action '\(action.title)'")
             }
-        actionBasedSegmentedControl.setAction(firstAction, forSegmentAt: 0)
+        segmentedControl.setAction(firstAction, forSegmentAt: 0)
         let secondAction =
             UIAction(title: NSLocalizedString("SearchTitle", comment: "")) { action in
                 Swift.debugPrint("Segment Action '\(action.title)'")
             }
-        actionBasedSegmentedControl.setAction(secondAction, forSegmentAt: 1)
+        segmentedControl.setAction(secondAction, forSegmentAt: 1)
         let thirdAction =
             UIAction(title: NSLocalizedString("ToolsTitle", comment: "")) { action in
                 Swift.debugPrint("Segment Action '\(action.title)'")
             }
-        actionBasedSegmentedControl.setAction(thirdAction, forSegmentAt: 2)
+        segmentedControl.setAction(thirdAction, forSegmentAt: 2)
     }
-        
+    
     // MARK: - Actions
 
     @objc
     func selectedSegmentDidChange(_ segmentedControl: UISegmentedControl) {
-        print("The selected segment changed for: \(segmentedControl).")
+        Swift.debugPrint("The selected segment: \(segmentedControl.selectedSegmentIndex).")
     }
     
     // MARK: - UITableViewDataSource
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        #if targetEnvironment(macCatalyst)
-        // Don't show tinted segmented control for macOS, it does not exist.
-        if section == 1 {
-            return ""
-        } else {
-            return super.tableView(tableView, titleForHeaderInSection: section)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellTest = testCells[indexPath.section]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellTest.cellID, for: indexPath)
+        if let segementedControl = cellTest.targetView(cell) as? UISegmentedControl {
+            cellTest.configHandler(segementedControl)
+        } else if let placeHolderView = cellTest.targetView(cell) {
+            // The only non-segmented control cell has a placeholder UIView (for adding one as a subview).
+            cellTest.configHandler(placeHolderView)
         }
-        #else
-        return super.tableView(tableView, titleForHeaderInSection: section)
-        #endif
+        return cell
     }
-    
-    // MARK: - UITableViewDelegate
-    
-    override func tableView(_ tableView: UITableView,
-                            heightForRowAt indexPath: IndexPath) -> CGFloat {
-        #if targetEnvironment(macCatalyst)
-        // Don't show tinted segmented control for macOS, it does not exist.
-        if indexPath.section == 1 {
-            return 0
-        } else {
-            return super.tableView(tableView, heightForRowAt: indexPath)
-        }
-        #else
-        return super.tableView(tableView, heightForRowAt: indexPath)
-        #endif
-    }
+
 }

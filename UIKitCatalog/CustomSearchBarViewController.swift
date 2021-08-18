@@ -43,19 +43,19 @@ class CustomSearchBarViewController: UIViewController {
 
 extension CustomSearchBarViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		print("The custom search bar keyboard \"Search\" button was tapped.")
+        Swift.debugPrint("The custom search bar keyboard \"Search\" button was tapped.")
 		
 		searchBar.resignFirstResponder()
 	}
 	
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		print("The custom search bar \"Cancel\" button was tapped.")
+        Swift.debugPrint("The custom search bar \"Cancel\" button was tapped.")
 		
 		searchBar.resignFirstResponder()
 	}
 	
 	func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-		print("The custom \"bookmark button\" inside the search bar was tapped.")
+        Swift.debugPrint("The custom \"bookmark button\" inside the search bar was tapped.")
 	}
 	
 }

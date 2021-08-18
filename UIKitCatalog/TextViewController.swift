@@ -52,7 +52,7 @@ class TextViewController: UIViewController {
 
     @objc
     func handleKeyboardNotification(_ notification: Notification) {
-        let userInfo = notification.userInfo!
+        guard let userInfo = notification.userInfo else { return }
 
         // Get the animation duration.
         var animationDuration: TimeInterval = 0
@@ -107,7 +107,7 @@ class TextViewController: UIViewController {
         entireAttributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: entireTextColor, range: entireRange)
         textView.attributedText = entireAttributedText
         
-        /** Let's modify some of the attributes of the attributed string.
+        /** Modify some of the attributes of the attributed string.
             You can modify these attributes yourself to get a better feel for what they do.
             Note that the initial text is visible in the storyboard.
          */
@@ -124,9 +124,7 @@ class TextViewController: UIViewController {
         let underlinedRange = text.range(of: NSLocalizedString("underlined", comment: ""))
         let tintedRange = text.range(of: NSLocalizedString("tinted", comment: ""))
         
-        /** Add bold attribute. Take the current font descriptor and create a new font descriptor
-         with an additional bold trait.
-         */
+        // Add bold attribute. Take the current font descriptor and create a new font descriptor with an additional bold trait.
         let boldFontDescriptor = textView.font!.fontDescriptor.withSymbolicTraits(.traitBold)
         let boldFont = UIFont(descriptor: boldFontDescriptor!, size: 0)
         attributedText.addAttribute(NSAttributedString.Key.font, value: boldFont, range: boldRange)
@@ -156,6 +154,15 @@ class TextViewController: UIViewController {
         return NSAttributedString(attachment: symbolAttachment)
     }
     
+    func multiColorSymbolAttributedString(name: String) -> NSAttributedString {
+        let symbolAttachment = NSTextAttachment()
+        let palleteSymbolConfig = UIImage.SymbolConfiguration(paletteColors: [UIColor.systemOrange, UIColor.systemRed])
+        if let symbolImage = UIImage(systemName: name)?.withConfiguration(palleteSymbolConfig) {
+            symbolAttachment.image = symbolImage
+        }
+        return NSAttributedString(attachment: symbolAttachment)
+    }
+    
     func configureTextView() {
         let bodyFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: UIFont.TextStyle.body)
         let bodyFont = UIFont(descriptor: bodyFontDescriptor, size: 0)
@@ -178,6 +185,12 @@ class TextViewController: UIViewController {
         attributedText.insert(symbolAttributedString(name: "heart.fill"), at: insertPoint)
         insertPoint += 1
         attributedText.insert(symbolAttributedString(name: "heart.slash"), at: insertPoint)
+        
+        // Multi-color SF Symbols only in iOS 15 or later.
+        if #available(iOS 15, *) {
+            insertPoint += 1
+            attributedText.insert(multiColorSymbolAttributedString(name: "arrow.up.heart.fill"), at: insertPoint)
+        }
         
         // Add the image as an attachment.
         if let image = UIImage(named: "text_view_attachment") {

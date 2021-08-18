@@ -7,106 +7,91 @@ A view controller that demonstrates how to use `UIStepper`.
 
 import UIKit
 
-class StepperViewController: UITableViewController {
-    // MARK: - Properties
-
-    @IBOutlet weak var defaultStepper: UIStepper!
-
-    @IBOutlet weak var tintedStepper: UIStepper!
+class StepperViewController: BaseTableViewController {
     
-    @IBOutlet weak var customStepper: UIStepper!
-
-    @IBOutlet weak var defaultStepperLabel: UILabel!
+    // Cell identifier for each stepper table view cell.
+    enum StepperKind: String, CaseIterable {
+        case defaultStepper
+        case tintedStepper
+        case customStepper
+    }
     
-    @IBOutlet weak var tintedStepperLabel: UILabel!
-    
-    @IBOutlet weak var customStepperLabel: UILabel!
-
-    // MARK: - View Life Cycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureDefaultStepper()
-        configureTintedStepper()
-        configureCustomStepper()
+        testCells.append(contentsOf: [
+            CaseElement(title: NSLocalizedString("DefaultStepperTitle", comment: ""),
+                        cellID: StepperKind.defaultStepper.rawValue,
+                        configHandler: configureDefaultStepper),
+            CaseElement(title: NSLocalizedString("TintedStepperTitle", comment: ""),
+                        cellID: StepperKind.tintedStepper.rawValue,
+                        configHandler: configureTintedStepper),
+            CaseElement(title: NSLocalizedString("CustomStepperTitle", comment: ""),
+                        cellID: StepperKind.customStepper.rawValue,
+                        configHandler: configureCustomStepper)
+        ])
     }
 
     // MARK: - Configuration
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        #if targetEnvironment(macCatalyst)
-        // Only show for the first table cell (default stepper).
-        // Tinted and Custom steppers do not exist in macOS.
-        return 1
-        #else
-        return super.numberOfSections(in: tableView)
-        #endif
-    }
     
-    func configureDefaultStepper() {
-        defaultStepper.value = 0
-        defaultStepper.minimumValue = 0
-        defaultStepper.maximumValue = 10
-        defaultStepper.stepValue = 1
+    func configureDefaultStepper(stepper: UIStepper) {
+        // Setup the stepper range 0 to 10, initial value 0, increment/decrement factor of 1.
+        stepper.value = 0
+        stepper.minimumValue = 0
+        stepper.maximumValue = 10
+        stepper.stepValue = 1
 
-        defaultStepperLabel.text = "\(Int(defaultStepper.value))"
-        defaultStepper.addTarget(self,
-                                 action: #selector(StepperViewController.stepperValueDidChange(_:)),
-                                 for: .valueChanged)
+        stepper.addTarget(self,
+                          action: #selector(StepperViewController.stepperValueDidChange(_:)),
+                          for: .valueChanged)
     }
 
-    func configureTintedStepper() {
-        tintedStepper.tintColor = UIColor(named: "tinted_stepper_control")!
-        tintedStepper.setDecrementImage(tintedStepper.decrementImage(for: .normal), for: .normal)
-        tintedStepper.setIncrementImage(tintedStepper.incrementImage(for: .normal), for: .normal)
+    func configureTintedStepper(stepper: UIStepper) {
+        // Setup the stepper range 0 to 20, initial value 20, increment/decrement factor of 1.
+        stepper.value = 20
+        stepper.minimumValue = 0
+        stepper.maximumValue = 20
+        stepper.stepValue = 1
         
-        tintedStepperLabel.text = "\(Int(tintedStepper.value))"
-        tintedStepper.addTarget(self,
-                                action: #selector(StepperViewController.stepperValueDidChange(_:)),
-                                for: .valueChanged)
+        stepper.tintColor = UIColor(named: "tinted_stepper_control")!
+        stepper.setDecrementImage(stepper.decrementImage(for: .normal), for: .normal)
+        stepper.setIncrementImage(stepper.incrementImage(for: .normal), for: .normal)
+
+        stepper.addTarget(self,
+                          action: #selector(StepperViewController.stepperValueDidChange(_:)),
+                          for: .valueChanged)
     }
 
-    func configureCustomStepper() {
+    func configureCustomStepper(stepper: UIStepper) {
         // Set the background image.
-        let stepperBackgroundImage = UIImage(named: "stepper_and_segment_background")
-        customStepper.setBackgroundImage(stepperBackgroundImage, for: .normal)
+        let stepperBackgroundImage = UIImage(named: "background")
+        stepper.setBackgroundImage(stepperBackgroundImage, for: .normal)
 
-        let stepperHighlightedBackgroundImage = UIImage(named: "stepper_and_segment_background_highlighted")
-        customStepper.setBackgroundImage(stepperHighlightedBackgroundImage, for: .highlighted)
+        let stepperHighlightedBackgroundImage = UIImage(named: "background_highlighted")
+        stepper.setBackgroundImage(stepperHighlightedBackgroundImage, for: .highlighted)
 
-        let stepperDisabledBackgroundImage = UIImage(named: "stepper_and_segment_background_disabled")
-        customStepper.setBackgroundImage(stepperDisabledBackgroundImage, for: .disabled)
+        let stepperDisabledBackgroundImage = UIImage(named: "background_disabled")
+        stepper.setBackgroundImage(stepperDisabledBackgroundImage, for: .disabled)
 
         // Set the image which will be painted in between the two stepper segments. It depends on the states of both segments.
         let stepperSegmentDividerImage = UIImage(named: "stepper_and_segment_divider")
-        customStepper.setDividerImage(stepperSegmentDividerImage, forLeftSegmentState: .normal, rightSegmentState: .normal)
+        stepper.setDividerImage(stepperSegmentDividerImage, forLeftSegmentState: .normal, rightSegmentState: .normal)
 
         // Set the image for the + button.
-        let stepperIncrementImage = UIImage(named: "stepper_increment")
-        customStepper.setIncrementImage(stepperIncrementImage, for: .normal)
+        let stepperIncrementImage = UIImage(systemName: "plus")
+        stepper.setIncrementImage(stepperIncrementImage, for: .normal)
 
         // Set the image for the - button.
-        let stepperDecrementImage = UIImage(named: "stepper_decrement")
-        customStepper.setDecrementImage(stepperDecrementImage, for: .normal)
+        let stepperDecrementImage = UIImage(systemName: "minus")
+        stepper.setDecrementImage(stepperDecrementImage, for: .normal)
 
-        customStepperLabel.text = "\(Int(customStepper.value))"
-        customStepper.addTarget(self, action: #selector(StepperViewController.stepperValueDidChange(_:)), for: .valueChanged)
+        stepper.addTarget(self, action: #selector(StepperViewController.stepperValueDidChange(_:)), for: .valueChanged)
     }
 
     // MARK: - Actions
 
     @objc
     func stepperValueDidChange(_ stepper: UIStepper) {
-        print("A stepper changed its value: \(stepper).")
-
-        // A mapping from a stepper to its associated label.
-        let stepperMapping = [
-            defaultStepper: defaultStepperLabel,
-            tintedStepper: tintedStepperLabel,
-            customStepper: customStepperLabel
-        ]
-
-        stepperMapping[stepper]!?.text = "\(Int(stepper.value))"
+        Swift.debugPrint("A stepper changed its value: \(stepper.value).")
     }
 }

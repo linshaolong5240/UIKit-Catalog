@@ -29,7 +29,10 @@
 		2200544A18BC54F5002A6E8B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2200543B18BC54F5002A6E8B /* WebViewController.swift */; };
 		228DBA0818BC53F1002BA12A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 228DBA0718BC53F1002BA12A /* Assets.xcassets */; };
 		3E5C084E1974991E00969DD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E5C08501974991E00969DD7 /* Main.storyboard */; };
+		530A4AB626AF352B00C0C649 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530A4AB526AF352B00C0C649 /* BaseTableViewController.swift */; };
 		5312D0F222848B0200048DE2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5312D0F022848B0200048DE2 /* Credits.rtf */; };
+		531AD242265E8B1200113EC6 /* VisualEffectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531AD241265E8B1100113EC6 /* VisualEffectViewController.swift */; };
+		531AD245265E8B8700113EC6 /* VisualEffectViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 531AD243265E8B8700113EC6 /* VisualEffectViewController.storyboard */; };
 		5340A1B62496CF64004F3666 /* DefaultToolbarViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5340A1B02496CF64004F3666 /* DefaultToolbarViewController.storyboard */; };
 		5340A1B72496CF64004F3666 /* CustomToolbarViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5340A1B22496CF64004F3666 /* CustomToolbarViewController.storyboard */; };
 		5340A1B82496CF64004F3666 /* TintedToolbarViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5340A1B42496CF64004F3666 /* TintedToolbarViewController.storyboard */; };
@@ -41,12 +44,15 @@
 		5364C0992496C2B3009A9A52 /* DefaultPageControlViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5364C0952496C2B3009A9A52 /* DefaultPageControlViewController.storyboard */; };
 		5364C09A2496C2B3009A9A52 /* CustomPageControlViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5364C0972496C2B3009A9A52 /* CustomPageControlViewController.storyboard */; };
 		53654E232298881200B999C7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53654E222298881200B999C7 /* WebKit.framework */; };
+		5387556B2660933A0041A1B4 /* PointerInteractionButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5387556A2660933A0041A1B4 /* PointerInteractionButtonViewController.swift */; };
+		53875571266095990041A1B4 /* PointerInteractionButtonViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5387556F266095990041A1B4 /* PointerInteractionButtonViewController.storyboard */; };
 		538B36F41F2A8E06002AE100 /* DatePickerController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538B36F21F2A8D97002AE100 /* DatePickerController.storyboard */; };
 		538B36F71F2A8E8A002AE100 /* TextViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538B36F51F2A8E66002AE100 /* TextViewController.storyboard */; };
 		539029FF1F2A53AD009775E3 /* AlertControllerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539029FD1F2A53AD009775E3 /* AlertControllerViewController.storyboard */; };
 		539C6BAE1F27F4980006C5A9 /* ActivityIndicatorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539C6BA81F27F4980006C5A9 /* ActivityIndicatorViewController.storyboard */; };
 		539C6BAF1F27F4980006C5A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539C6BAA1F27F4980006C5A9 /* LaunchScreen.storyboard */; };
 		539C6BB01F27F4980006C5A9 /* WebViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539C6BAC1F27F4980006C5A9 /* WebViewController.storyboard */; };
+		53A2264B26C1AE7000C0EF3F /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 53A2264926C1A70800C0EF3F /* Localizable.stringsdict */; };
 		53A266B52491ED77008EADBB /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A266AE2491ED77008EADBB /* ImagePickerViewController.swift */; };
 		53A266B62491ED77008EADBB /* CustomPageControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A266AF2491ED77008EADBB /* CustomPageControlViewController.swift */; };
 		53A266B82491ED77008EADBB /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A266B12491ED77008EADBB /* ColorPickerViewController.swift */; };
@@ -57,6 +63,9 @@
 		53B791DA1F85505400AB2FA6 /* content.html in Resources */ = {isa = PBXBuildFile; fileRef = 53B791D41F854B4700AB2FA6 /* content.html */; };
 		53B791DB1F85505700AB2FA6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53B791D61F854B4700AB2FA6 /* InfoPlist.strings */; };
 		53B791DC1F85505A00AB2FA6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53B791D81F854B4800AB2FA6 /* Localizable.strings */; };
+		53CB2C59265FFE9900155325 /* ButtonViewController+Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CB2C58265FFE9900155325 /* ButtonViewController+Configs.swift */; };
+		53CB2C60266003A800155325 /* MenuButtonViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53CB2C5E266003A800155325 /* MenuButtonViewController.storyboard */; };
+		53CB2C62266003B200155325 /* MenuButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CB2C61266003B200155325 /* MenuButtonViewController.swift */; };
 		53CE5AD81F2A89E500D8A656 /* ButtonViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53CE5AD61F2A89E500D8A656 /* ButtonViewController.storyboard */; };
 		53CE5ADE1F2A8A3D00D8A656 /* ImageViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53CE5ADC1F2A8A3D00D8A656 /* ImageViewController.storyboard */; };
 		53CE5AE61F2A8AEF00D8A656 /* PickerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53CE5AE41F2A8AEF00D8A656 /* PickerViewController.storyboard */; };
@@ -67,6 +76,9 @@
 		53CE5AF51F2A8BB000D8A656 /* StepperViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53CE5AF31F2A8BB000D8A656 /* StepperViewController.storyboard */; };
 		53CE5AF81F2A8BD000D8A656 /* SwitchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53CE5AF61F2A8BD000D8A656 /* SwitchViewController.storyboard */; };
 		53CE5AFB1F2A8BEB00D8A656 /* TextFieldViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53CE5AF91F2A8BEB00D8A656 /* TextFieldViewController.storyboard */; };
+		53D054A526790B6E00CD8B1A /* SymbolViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53D054A326790B6E00CD8B1A /* SymbolViewController.storyboard */; };
+		53D054A726790B7D00CD8B1A /* SymbolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D054A626790B7D00CD8B1A /* SymbolViewController.swift */; };
+		53F57011265761D500458712 /* CaseElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F57010265761D500458712 /* CaseElement.swift */; };
 		B50F41081B1D284700E5147D /* StackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50F41071B1D284700E5147D /* StackViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,7 +108,10 @@
 		228DB9F718BC53F1002BA12A /* UIKitCatalog-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIKitCatalog-Info.plist"; sourceTree = "<group>"; };
 		228DBA0718BC53F1002BA12A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E5C084F1974991E00969DD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		530A4AB526AF352B00C0C649 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		5312D0F122848B0200048DE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Base; path = Base.lproj/Credits.rtf; sourceTree = "<group>"; };
+		531AD241265E8B1100113EC6 /* VisualEffectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectViewController.swift; sourceTree = "<group>"; };
+		531AD244265E8B8700113EC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/VisualEffectViewController.storyboard; sourceTree = "<group>"; };
 		5340A1B12496CF64004F3666 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/DefaultToolbarViewController.storyboard; sourceTree = "<group>"; };
 		5340A1B32496CF64004F3666 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CustomToolbarViewController.storyboard; sourceTree = "<group>"; };
 		5340A1B52496CF64004F3666 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TintedToolbarViewController.storyboard; sourceTree = "<group>"; };
@@ -108,12 +123,15 @@
 		5364C0962496C2B3009A9A52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/DefaultPageControlViewController.storyboard; sourceTree = "<group>"; };
 		5364C0982496C2B3009A9A52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CustomPageControlViewController.storyboard; sourceTree = "<group>"; };
 		53654E222298881200B999C7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		5387556A2660933A0041A1B4 /* PointerInteractionButtonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointerInteractionButtonViewController.swift; sourceTree = "<group>"; };
+		53875570266095990041A1B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PointerInteractionButtonViewController.storyboard; sourceTree = "<group>"; };
 		538B36F31F2A8D97002AE100 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/DatePickerController.storyboard; sourceTree = "<group>"; };
 		538B36F61F2A8E66002AE100 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TextViewController.storyboard; sourceTree = "<group>"; };
 		539029FE1F2A53AD009775E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AlertControllerViewController.storyboard; sourceTree = "<group>"; };
 		539C6BA91F27F4980006C5A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ActivityIndicatorViewController.storyboard; sourceTree = "<group>"; };
 		539C6BAB1F27F4980006C5A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		539C6BAD1F27F4980006C5A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WebViewController.storyboard; sourceTree = "<group>"; };
+		53A2264A26C1A70800C0EF3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = Base; path = UIKitCatalog/Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		53A266AE2491ED77008EADBB /* ImagePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
 		53A266AF2491ED77008EADBB /* CustomPageControlViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPageControlViewController.swift; sourceTree = "<group>"; };
 		53A266B12491ED77008EADBB /* ColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +142,9 @@
 		53B791D51F854B4700AB2FA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/content.html; sourceTree = "<group>"; };
 		53B791D71F854B4700AB2FA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53B791D91F854B4800AB2FA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		53CB2C58265FFE9900155325 /* ButtonViewController+Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonViewController+Configs.swift"; sourceTree = "<group>"; };
+		53CB2C5F266003A800155325 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MenuButtonViewController.storyboard; sourceTree = "<group>"; };
+		53CB2C61266003B200155325 /* MenuButtonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuButtonViewController.swift; sourceTree = "<group>"; };
 		53CE5AD71F2A89E500D8A656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ButtonViewController.storyboard; sourceTree = "<group>"; };
 		53CE5ADD1F2A8A3D00D8A656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ImageViewController.storyboard; sourceTree = "<group>"; };
 		53CE5AE51F2A8AEF00D8A656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PickerViewController.storyboard; sourceTree = "<group>"; };
@@ -134,7 +155,10 @@
 		53CE5AF41F2A8BB000D8A656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/StepperViewController.storyboard; sourceTree = "<group>"; };
 		53CE5AF71F2A8BD000D8A656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SwitchViewController.storyboard; sourceTree = "<group>"; };
 		53CE5AFA1F2A8BEB00D8A656 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TextFieldViewController.storyboard; sourceTree = "<group>"; };
+		53D054A426790B6E00CD8B1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SymbolViewController.storyboard; sourceTree = "<group>"; };
+		53D054A626790B7D00CD8B1A /* SymbolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolViewController.swift; sourceTree = "<group>"; };
 		53DDE73C22776382000006CF /* UIKitCatalog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UIKitCatalog.entitlements; sourceTree = "<group>"; };
+		53F57010265761D500458712 /* CaseElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseElement.swift; sourceTree = "<group>"; };
 		64D8CD77C30F3CED2D55B8F2 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.txt; sourceTree = "<group>"; };
 		8A04EFECD9880EE89ADA2FE8 /* SampleCode.xcconfig */ = {isa = PBXFileReference; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		B50F41071B1D284700E5147D /* StackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +227,7 @@
 				53B791D41F854B4700AB2FA6 /* content.html */,
 				53B791D61F854B4700AB2FA6 /* InfoPlist.strings */,
 				53B791D81F854B4800AB2FA6 /* Localizable.strings */,
+				53A2264926C1A70800C0EF3F /* Localizable.stringsdict */,
 				5312D0F022848B0200048DE2 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
@@ -235,20 +260,16 @@
 		3E1DA7601931CC99000114A9 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				2200542118BC54EC002A6E8B /* ButtonViewController.swift */,
-				53CE5AD61F2A89E500D8A656 /* ButtonViewController.storyboard */,
+				53D34692265D86FF00D0B553 /* Button */,
+				53CB2C5A2660038E00155325 /* Menu Button */,
+				53875569266093290041A1B4 /* Pointer Interaction Button */,
 				5364C0942496C22D009A9A52 /* Page Control */,
 				22B7BB9718BC601D006C4AD5 /* Search */,
-				2200543318BC54F5002A6E8B /* SegmentedControlViewController.swift */,
-				53CE5AEA1F2A8B2F00D8A656 /* SegmentedControlViewController.storyboard */,
-				2200543418BC54F5002A6E8B /* SliderViewController.swift */,
-				53CE5AED1F2A8B4F00D8A656 /* SliderViewController.storyboard */,
-				2200543618BC54F5002A6E8B /* StepperViewController.swift */,
-				53CE5AF31F2A8BB000D8A656 /* StepperViewController.storyboard */,
-				2200543718BC54F5002A6E8B /* SwitchViewController.swift */,
-				53CE5AF61F2A8BD000D8A656 /* SwitchViewController.storyboard */,
-				2200543818BC54F5002A6E8B /* TextFieldViewController.swift */,
-				53CE5AF91F2A8BEB00D8A656 /* TextFieldViewController.storyboard */,
+				53D34693265D871500D0B553 /* Segmented */,
+				53D34694265D872A00D0B553 /* Slider */,
+				53D428AA26826A8D001A0414 /* Stepper */,
+				53D428AC26826AB1001A0414 /* Switch */,
+				53D428AB26826A9C001A0414 /* TextField */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -259,6 +280,8 @@
 				2200541C18BC54E8002A6E8B /* AppDelegate.swift */,
 				535D32B124970EF10011E153 /* SceneDelegate.swift */,
 				5364C08A249696D7009A9A52 /* OutlineViewController.swift */,
+				53F57010265761D500458712 /* CaseElement.swift */,
+				530A4AB526AF352B00C0C649 /* BaseTableViewController.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -282,22 +305,39 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		53875569266093290041A1B4 /* Pointer Interaction Button */ = {
+			isa = PBXGroup;
+			children = (
+				5387556A2660933A0041A1B4 /* PointerInteractionButtonViewController.swift */,
+				5387556F266095990041A1B4 /* PointerInteractionButtonViewController.storyboard */,
+			);
+			name = "Pointer Interaction Button";
+			sourceTree = "<group>";
+		};
+		53927674268684F900CB7664 /* ProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				2200543218BC54F5002A6E8B /* ProgressViewController.swift */,
+				53CE5AE71F2A8B1000D8A656 /* ProgressViewController.storyboard */,
+			);
+			name = ProgressView;
+			sourceTree = "<group>";
+		};
 		539383DE2492800100A489A9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2200541A18BC54E8002A6E8B /* ActivityIndicatorViewController.swift */,
-				539C6BA81F27F4980006C5A9 /* ActivityIndicatorViewController.storyboard */,
+				53D428AD2682C58C001A0414 /* ActivityIndicator */,
 				2200541B18BC54E8002A6E8B /* AlertControllerViewController.swift */,
 				539029FD1F2A53AD009775E3 /* AlertControllerViewController.storyboard */,
-				2200542D18BC54F5002A6E8B /* ImageViewController.swift */,
-				53CE5ADC1F2A8A3D00D8A656 /* ImageViewController.storyboard */,
-				2200543218BC54F5002A6E8B /* ProgressViewController.swift */,
-				53CE5AE71F2A8B1000D8A656 /* ProgressViewController.storyboard */,
-				B50F41071B1D284700E5147D /* StackViewController.swift */,
-				53CE5AF01F2A8B8300D8A656 /* StackViewController.storyboard */,
 				2200543918BC54F5002A6E8B /* TextViewController.swift */,
 				538B36F51F2A8E66002AE100 /* TextViewController.storyboard */,
+				53D0549F26790A3200CD8B1A /* Image View */,
+				53927674268684F900CB7664 /* ProgressView */,
+				B50F41071B1D284700E5147D /* StackViewController.swift */,
+				53CE5AF01F2A8B8300D8A656 /* StackViewController.storyboard */,
 				22B7BB9818BC6024006C4AD5 /* Toolbar */,
+				531AD241265E8B1100113EC6 /* VisualEffectViewController.swift */,
+				531AD243265E8B8700113EC6 /* VisualEffectViewController.storyboard */,
 				2200543B18BC54F5002A6E8B /* WebViewController.swift */,
 				539C6BAC1F27F4980006C5A9 /* WebViewController.storyboard */,
 			);
@@ -319,6 +359,90 @@
 				53A266BA2491ED9E008EADBB /* ImagePickerViewController.storyboard */,
 			);
 			name = Pickers;
+			sourceTree = "<group>";
+		};
+		53CB2C5A2660038E00155325 /* Menu Button */ = {
+			isa = PBXGroup;
+			children = (
+				53CB2C61266003B200155325 /* MenuButtonViewController.swift */,
+				53CB2C5E266003A800155325 /* MenuButtonViewController.storyboard */,
+			);
+			name = "Menu Button";
+			sourceTree = "<group>";
+		};
+		53D0549F26790A3200CD8B1A /* Image View */ = {
+			isa = PBXGroup;
+			children = (
+				2200542D18BC54F5002A6E8B /* ImageViewController.swift */,
+				53CE5ADC1F2A8A3D00D8A656 /* ImageViewController.storyboard */,
+				53D054A626790B7D00CD8B1A /* SymbolViewController.swift */,
+				53D054A326790B6E00CD8B1A /* SymbolViewController.storyboard */,
+			);
+			name = "Image View";
+			sourceTree = "<group>";
+		};
+		53D34692265D86FF00D0B553 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				2200542118BC54EC002A6E8B /* ButtonViewController.swift */,
+				53CB2C58265FFE9900155325 /* ButtonViewController+Configs.swift */,
+				53CE5AD61F2A89E500D8A656 /* ButtonViewController.storyboard */,
+			);
+			name = Button;
+			sourceTree = "<group>";
+		};
+		53D34693265D871500D0B553 /* Segmented */ = {
+			isa = PBXGroup;
+			children = (
+				2200543318BC54F5002A6E8B /* SegmentedControlViewController.swift */,
+				53CE5AEA1F2A8B2F00D8A656 /* SegmentedControlViewController.storyboard */,
+			);
+			name = Segmented;
+			sourceTree = "<group>";
+		};
+		53D34694265D872A00D0B553 /* Slider */ = {
+			isa = PBXGroup;
+			children = (
+				2200543418BC54F5002A6E8B /* SliderViewController.swift */,
+				53CE5AED1F2A8B4F00D8A656 /* SliderViewController.storyboard */,
+			);
+			name = Slider;
+			sourceTree = "<group>";
+		};
+		53D428AA26826A8D001A0414 /* Stepper */ = {
+			isa = PBXGroup;
+			children = (
+				2200543618BC54F5002A6E8B /* StepperViewController.swift */,
+				53CE5AF31F2A8BB000D8A656 /* StepperViewController.storyboard */,
+			);
+			name = Stepper;
+			sourceTree = "<group>";
+		};
+		53D428AB26826A9C001A0414 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				2200543818BC54F5002A6E8B /* TextFieldViewController.swift */,
+				53CE5AF91F2A8BEB00D8A656 /* TextFieldViewController.storyboard */,
+			);
+			name = TextField;
+			sourceTree = "<group>";
+		};
+		53D428AC26826AB1001A0414 /* Switch */ = {
+			isa = PBXGroup;
+			children = (
+				2200543718BC54F5002A6E8B /* SwitchViewController.swift */,
+				53CE5AF61F2A8BD000D8A656 /* SwitchViewController.storyboard */,
+			);
+			name = Switch;
+			sourceTree = "<group>";
+		};
+		53D428AD2682C58C001A0414 /* ActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				2200541A18BC54E8002A6E8B /* ActivityIndicatorViewController.swift */,
+				539C6BA81F27F4980006C5A9 /* ActivityIndicatorViewController.storyboard */,
+			);
+			name = ActivityIndicator;
 			sourceTree = "<group>";
 		};
 		D9361AEE59ED9397893793F6 /* LICENSE */ = {
@@ -399,12 +523,14 @@
 				53A266C22491ED9E008EADBB /* ImagePickerViewController.storyboard in Resources */,
 				5364C0992496C2B3009A9A52 /* DefaultPageControlViewController.storyboard in Resources */,
 				5340A1B72496CF64004F3666 /* CustomToolbarViewController.storyboard in Resources */,
+				53875571266095990041A1B4 /* PointerInteractionButtonViewController.storyboard in Resources */,
 				53CE5AE61F2A8AEF00D8A656 /* PickerViewController.storyboard in Resources */,
 				53B791DA1F85505400AB2FA6 /* content.html in Resources */,
 				3E5C084E1974991E00969DD7 /* Main.storyboard in Resources */,
 				53CE5AEC1F2A8B2F00D8A656 /* SegmentedControlViewController.storyboard in Resources */,
 				5364C0932496BEFD009A9A52 /* CustomSearchBarViewController.storyboard in Resources */,
 				53B791DB1F85505700AB2FA6 /* InfoPlist.strings in Resources */,
+				53CB2C60266003A800155325 /* MenuButtonViewController.storyboard in Resources */,
 				539C6BAE1F27F4980006C5A9 /* ActivityIndicatorViewController.storyboard in Resources */,
 				53CE5AFB1F2A8BEB00D8A656 /* TextFieldViewController.storyboard in Resources */,
 				53B791DC1F85505A00AB2FA6 /* Localizable.strings in Resources */,
@@ -415,9 +541,12 @@
 				538B36F71F2A8E8A002AE100 /* TextViewController.storyboard in Resources */,
 				539C6BAF1F27F4980006C5A9 /* LaunchScreen.storyboard in Resources */,
 				5312D0F222848B0200048DE2 /* Credits.rtf in Resources */,
+				53D054A526790B6E00CD8B1A /* SymbolViewController.storyboard in Resources */,
 				539029FF1F2A53AD009775E3 /* AlertControllerViewController.storyboard in Resources */,
 				53CE5AF51F2A8BB000D8A656 /* StepperViewController.storyboard in Resources */,
+				531AD245265E8B8700113EC6 /* VisualEffectViewController.storyboard in Resources */,
 				53CE5AF81F2A8BD000D8A656 /* SwitchViewController.storyboard in Resources */,
+				53A2264B26C1AE7000C0EF3F /* Localizable.stringsdict in Resources */,
 				5340A1B62496CF64004F3666 /* DefaultToolbarViewController.storyboard in Resources */,
 				53CE5ADE1F2A8A3D00D8A656 /* ImageViewController.storyboard in Resources */,
 			);
@@ -437,6 +566,8 @@
 				2200544218BC54F5002A6E8B /* SegmentedControlViewController.swift in Sources */,
 				2200544A18BC54F5002A6E8B /* WebViewController.swift in Sources */,
 				2200542018BC54E8002A6E8B /* AppDelegate.swift in Sources */,
+				531AD242265E8B1200113EC6 /* VisualEffectViewController.swift in Sources */,
+				53CB2C62266003B200155325 /* MenuButtonViewController.swift in Sources */,
 				5340A1B92496D670004F3666 /* PickerViewController.swift in Sources */,
 				53A266B92491ED77008EADBB /* FontPickerViewController.swift in Sources */,
 				2200541F18BC54E8002A6E8B /* AlertControllerViewController.swift in Sources */,
@@ -445,16 +576,21 @@
 				2200541E18BC54E8002A6E8B /* ActivityIndicatorViewController.swift in Sources */,
 				2200544618BC54F5002A6E8B /* SwitchViewController.swift in Sources */,
 				B50F41081B1D284700E5147D /* StackViewController.swift in Sources */,
+				530A4AB626AF352B00C0C649 /* BaseTableViewController.swift in Sources */,
 				535D32B224970EF10011E153 /* SceneDelegate.swift in Sources */,
+				53F57011265761D500458712 /* CaseElement.swift in Sources */,
 				2200544118BC54F5002A6E8B /* ProgressViewController.swift in Sources */,
 				2200544718BC54F5002A6E8B /* TextFieldViewController.swift in Sources */,
 				2200544818BC54F5002A6E8B /* TextViewController.swift in Sources */,
+				5387556B2660933A0041A1B4 /* PointerInteractionButtonViewController.swift in Sources */,
 				2200542B18BC54EC002A6E8B /* DefaultSearchBarViewController.swift in Sources */,
 				2200544518BC54F5002A6E8B /* StepperViewController.swift in Sources */,
+				53D054A726790B7D00CD8B1A /* SymbolViewController.swift in Sources */,
 				53A266B62491ED77008EADBB /* CustomPageControlViewController.swift in Sources */,
 				53A266B82491ED77008EADBB /* ColorPickerViewController.swift in Sources */,
 				2200542818BC54EC002A6E8B /* CustomSearchBarViewController.swift in Sources */,
 				53A266B52491ED77008EADBB /* ImagePickerViewController.swift in Sources */,
+				53CB2C59265FFE9900155325 /* ButtonViewController+Configs.swift in Sources */,
 				2200542918BC54EC002A6E8B /* CustomToolbarViewController.swift in Sources */,
 				2200542A18BC54EC002A6E8B /* DatePickerController.swift in Sources */,
 				2200542718BC54EC002A6E8B /* ButtonViewController.swift in Sources */,
@@ -478,6 +614,14 @@
 				5312D0F122848B0200048DE2 /* Base */,
 			);
 			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		531AD243265E8B8700113EC6 /* VisualEffectViewController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				531AD244265E8B8700113EC6 /* Base */,
+			);
+			name = VisualEffectViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		5340A1B02496CF64004F3666 /* DefaultToolbarViewController.storyboard */ = {
@@ -536,6 +680,14 @@
 			name = CustomPageControlViewController.storyboard;
 			sourceTree = "<group>";
 		};
+		5387556F266095990041A1B4 /* PointerInteractionButtonViewController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53875570266095990041A1B4 /* Base */,
+			);
+			name = PointerInteractionButtonViewController.storyboard;
+			sourceTree = "<group>";
+		};
 		538B36F21F2A8D97002AE100 /* DatePickerController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -584,6 +736,14 @@
 			name = WebViewController.storyboard;
 			sourceTree = "<group>";
 		};
+		53A2264926C1A70800C0EF3F /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53A2264A26C1A70800C0EF3F /* Base */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
 		53A266BA2491ED9E008EADBB /* ImagePickerViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -630,6 +790,14 @@
 				53B791D91F854B4800AB2FA6 /* Base */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		53CB2C5E266003A800155325 /* MenuButtonViewController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53CB2C5F266003A800155325 /* Base */,
+			);
+			name = MenuButtonViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		53CE5AD61F2A89E500D8A656 /* ButtonViewController.storyboard */ = {
@@ -710,6 +878,14 @@
 				53CE5AFA1F2A8BEB00D8A656 /* Base */,
 			);
 			name = TextFieldViewController.storyboard;
+			sourceTree = "<group>";
+		};
+		53D054A326790B6E00CD8B1A /* SymbolViewController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53D054A426790B6E00CD8B1A /* Base */,
+			);
+			name = SymbolViewController.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -831,9 +1007,9 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/UIKitCatalog/UIKitCatalog-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 16;
+				MARKETING_VERSION = 17;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -854,9 +1030,9 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/UIKitCatalog/UIKitCatalog-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 16;
+				MARKETING_VERSION = 17;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

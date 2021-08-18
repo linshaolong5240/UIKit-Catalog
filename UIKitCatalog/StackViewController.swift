@@ -11,13 +11,9 @@ class StackViewController: UIViewController {
     // MARK: - Properties
 	
     @IBOutlet var furtherDetailStackView: UIStackView!
-    
     @IBOutlet var plusButton: UIButton!
-    
     @IBOutlet var addRemoveExampleStackView: UIStackView!
-    
     @IBOutlet var addArrangedViewButton: UIButton!
-    
     @IBOutlet var removeArrangedViewButton: UIButton!
     
     let maximumArrangedSubviewCount = 3

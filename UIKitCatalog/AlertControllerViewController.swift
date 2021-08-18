@@ -32,21 +32,21 @@ class AlertControllerViewController: UITableViewController {
 		case howOtherActionSheet
 	}
 	
-	private var textDidChangeObserver: NSObjectProtocol!
-
+    private var textDidChangeObserver: Any? = nil
+    
     // MARK: - UIAlertControllerStyleAlert Style Alerts
 
     /// Show an alert with an "OK" button.
     func showSimpleAlert() {
         let title = NSLocalizedString("A Short Title is Best", comment: "")
-        let message = NSLocalizedString("A message should be a short, complete sentence.", comment: "")
+        let message = NSLocalizedString("A message needs to be a short, complete sentence.", comment: "")
         let cancelButtonTitle = NSLocalizedString("OK", comment: "")
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         // Create the action.
         let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { _ in
-            print("The simple alert's cancel action occurred.")
+            Swift.debugPrint("The simple alert's cancel action occurred.")
         }
 
         // Add the action.
@@ -58,7 +58,7 @@ class AlertControllerViewController: UITableViewController {
     /// Show an alert with an "OK" and "Cancel" button.
     func showOkayCancelAlert() {
         let title = NSLocalizedString("A Short Title is Best", comment: "")
-        let message = NSLocalizedString("A message should be a short, complete sentence.", comment: "")
+        let message = NSLocalizedString("A message needs to be a short, complete sentence.", comment: "")
         let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
         let otherButtonTitle = NSLocalizedString("OK", comment: "")
         
@@ -66,11 +66,11 @@ class AlertControllerViewController: UITableViewController {
 
         // Create the actions.
         let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { _ in
-            print("The \"OK/Cancel\" alert's cancel action occurred.")
+            Swift.debugPrint("The \"OK/Cancel\" alert's cancel action occurred.")
         }
         
         let otherAction = UIAlertAction(title: otherButtonTitle, style: .default) { _ in
-            print("The \"OK/Cancel\" alert's other action occurred.")
+            Swift.debugPrint("The \"OK/Cancel\" alert's other action occurred.")
         }
         
         // Add the actions.
@@ -83,7 +83,7 @@ class AlertControllerViewController: UITableViewController {
     /// Show an alert with two custom buttons.
     func showOtherAlert() {
         let title = NSLocalizedString("A Short Title is Best", comment: "")
-        let message = NSLocalizedString("A message should be a short, complete sentence.", comment: "")
+        let message = NSLocalizedString("A message needs to be a short, complete sentence.", comment: "")
         let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
         let otherButtonTitleOne = NSLocalizedString("Choice One", comment: "")
         let otherButtonTitleTwo = NSLocalizedString("Choice Two", comment: "")
@@ -92,15 +92,15 @@ class AlertControllerViewController: UITableViewController {
         
         // Create the actions.
         let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { _ in
-            print("The \"Other\" alert's cancel action occurred.")
+            Swift.debugPrint("The \"Other\" alert's cancel action occurred.")
         }
         
         let otherButtonOneAction = UIAlertAction(title: otherButtonTitleOne, style: .default) { _ in
-            print("The \"Other\" alert's other button one action occurred.")
+            Swift.debugPrint("The \"Other\" alert's other button one action occurred.")
         }
         
         let otherButtonTwoAction = UIAlertAction(title: otherButtonTitleTwo, style: .default) { _ in
-            print("The \"Other\" alert's other button two action occurred.")
+            Swift.debugPrint("The \"Other\" alert's other button two action occurred.")
         }
         
         // Add the actions.
@@ -114,7 +114,7 @@ class AlertControllerViewController: UITableViewController {
     /// Show a text entry alert with two custom buttons.
     func showTextEntryAlert() {
         let title = NSLocalizedString("A Short Title is Best", comment: "")
-        let message = NSLocalizedString("A message should be a short, complete sentence.", comment: "")
+        let message = NSLocalizedString("A message needs to be a short, complete sentence.", comment: "")
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -126,12 +126,12 @@ class AlertControllerViewController: UITableViewController {
         // Create the actions.
         let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
         let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { _ in
-            print("The \"Text Entry\" alert's cancel action occurred.")
+            Swift.debugPrint("The \"Text Entry\" alert's cancel action occurred.")
         }
         
         let otherButtonTitle = NSLocalizedString("OK", comment: "")
         let otherAction = UIAlertAction(title: otherButtonTitle, style: .default) { _ in
-            print("The \"Text Entry\" alert's other action occurred.")
+            Swift.debugPrint("The \"Text Entry\" alert's other action occurred.")
         }
         
         // Add the actions.
@@ -144,7 +144,7 @@ class AlertControllerViewController: UITableViewController {
     /// Show a secure text entry alert with two custom buttons.
     func showSecureTextEntryAlert() {
         let title = NSLocalizedString("A Short Title is Best", comment: "")
-        let message = NSLocalizedString("A message should be a short, complete sentence.", comment: "")
+        let message = NSLocalizedString("A message needs to be a short, complete sentence.", comment: "")
         let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
         let otherButtonTitle = NSLocalizedString("OK", comment: "")
         
@@ -152,34 +152,40 @@ class AlertControllerViewController: UITableViewController {
         
         // Add the text field for the secure text entry.
         alertController.addTextField { textField in
-            /**	Listen for changes to the text field's text so that we can toggle the current
+            if let observer = self.textDidChangeObserver {
+                NotificationCenter.default.removeObserver(observer)
+            }
+            /** Listen for changes to the text field's text so that we can toggle the current
                 action's enabled property based on whether the user has entered a sufficiently
                 secure entry.
             */
-			self.textDidChangeObserver = NotificationCenter.default.addObserver(
-				forName: UITextField.textDidChangeNotification,
-				object: textField,
-				queue: OperationQueue.main) { (notification) in
-					if let textField = notification.object as? UITextField {
-						// Enforce a minimum length of >= 5 characters for secure text alerts.
-						if let text = textField.text {
-							self.secureTextAlertAction!.isEnabled = text.count >= 5
-						} else {
-							self.secureTextAlertAction!.isEnabled = false
-						}
-					}
-			}
-			
+            self.textDidChangeObserver =
+                NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification,
+                                                       object: textField,
+                                                       queue: OperationQueue.main,
+                                                       using: { (notification) in
+                    if let textField = notification.object as? UITextField {
+                        // Enforce a minimum length of >= 5 characters for secure text alerts.
+                        if let alertAction = self.secureTextAlertAction {
+                            if let text = textField.text {
+                                alertAction.isEnabled = text.count >= 5
+                            } else {
+                                alertAction.isEnabled = false
+                            }
+                        }
+                    }
+            })
+
             textField.isSecureTextEntry = true
         }
 		
         // Create the actions.
         let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { _ in
-            print("The \"Secure Text Entry\" alert's cancel action occurred.")
+            Swift.debugPrint("The \"Secure Text Entry\" alert's cancel action occurred.")
         }
         
         let otherAction = UIAlertAction(title: otherButtonTitle, style: .default) { _ in
-            print("The \"Secure Text Entry\" alert's other action occurred.")
+            Swift.debugPrint("The \"Secure Text Entry\" alert's other action occurred.")
         }
         
         /** The text field initially has no text in the text field, so we'll disable it for now.
@@ -203,7 +209,7 @@ class AlertControllerViewController: UITableViewController {
     
     // Show a dialog with an "OK" and "Cancel" button.
     func showOkayCancelActionSheet(_ selectedIndexPath: IndexPath) {
-        let message = NSLocalizedString("A message should be a short, complete sentence.", comment: "")
+        let message = NSLocalizedString("A message needs to be a short, complete sentence.", comment: "")
 		let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
         let destructiveButtonTitle = NSLocalizedString("Confirm", comment: "")
         
@@ -211,11 +217,11 @@ class AlertControllerViewController: UITableViewController {
         
         // Create the actions.
         let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel) { _ in
-            print("The \"OK/Cancel\" alert action sheet's cancel action occurred.")
+            Swift.debugPrint("The \"OK/Cancel\" alert action sheet's cancel action occurred.")
         }
         
         let destructiveAction = UIAlertAction(title: destructiveButtonTitle, style: .default) { _ in
-            print("The \"Confirm\" alert action sheet's destructive action occurred.")
+            Swift.debugPrint("The \"Confirm\" alert action sheet's destructive action occurred.")
         }
         
         // Add the actions.
@@ -238,7 +244,7 @@ class AlertControllerViewController: UITableViewController {
 
     // Show a dialog with two custom buttons.
     func showOtherActionSheet(_ selectedIndexPath: IndexPath) {
-        let message = NSLocalizedString("A message should be a short, complete sentence.", comment: "")
+        let message = NSLocalizedString("A message needs to be a short, complete sentence.", comment: "")
 		let destructiveButtonTitle = NSLocalizedString("Destructive Choice", comment: "")
         let otherButtonTitle = NSLocalizedString("Safe Choice", comment: "")
         
@@ -246,10 +252,10 @@ class AlertControllerViewController: UITableViewController {
         
         // Create the actions.
         let destructiveAction = UIAlertAction(title: destructiveButtonTitle, style: .destructive) { _ in
-            print("The \"Other\" alert action sheet's destructive action occurred.")
+            Swift.debugPrint("The \"Other\" alert action sheet's destructive action occurred.")
         }
         let otherAction = UIAlertAction(title: otherButtonTitle, style: .default) { _ in
-            print("The \"Other\" alert action sheet's other action occurred.")
+            Swift.debugPrint("The \"Other\" alert action sheet's other action occurred.")
         }
         
         // Add the actions.
@@ -275,6 +281,7 @@ class AlertControllerViewController: UITableViewController {
 // MARK: - UITableViewDelegate
 
 extension AlertControllerViewController {
+    
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch indexPath.section {
 		case StyleSections.alertStyleSection.rawValue:
