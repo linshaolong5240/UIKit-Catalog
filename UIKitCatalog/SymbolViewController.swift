@@ -78,6 +78,7 @@ class SymbolViewController: BaseTableViewController {
         imageView.preferredSymbolConfiguration = symbolConfig
     }
     
+    @available(iOS 15.0, *)
     func configureHierarchicalSymbol(_ imageView: UIImageView) {
         let imageConfig = UIImage.SymbolConfiguration(hierarchicalColor: UIColor.systemRed)
         let hierarchicalSymbol = UIImage(systemName: "cloud.sun.rain.fill")
@@ -85,6 +86,7 @@ class SymbolViewController: BaseTableViewController {
         imageView.preferredSymbolConfiguration = imageConfig
     }
     
+    @available(iOS 15.0, *)
     func configurePaletteColorsSymbol(_ imageView: UIImageView) {
         let palleteSymbolConfig = UIImage.SymbolConfiguration(paletteColors: [UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow])
         let palleteSymbol = UIImage(systemName: "battery.100.bolt")
@@ -93,8 +95,9 @@ class SymbolViewController: BaseTableViewController {
         imageView.preferredSymbolConfiguration = palleteSymbolConfig
     }
     
+    @available(iOS 15.0, *)
     func configurePreferringMultiColorSymbol(_ imageView: UIImageView) {
-        let preferredSymbolConfig = UIImage.SymbolConfiguration.configurationPreferringMulticolor()
+        let preferredSymbolConfig = UIImage.SymbolConfiguration.preferringMulticolor()
         let preferredSymbol = UIImage(systemName: "circle.hexagongrid.fill")
         imageView.image = preferredSymbol
         imageView.preferredSymbolConfiguration = preferredSymbolConfig

@@ -154,6 +154,7 @@ class TextViewController: UIViewController {
         return NSAttributedString(attachment: symbolAttachment)
     }
     
+    @available(iOS 15.0, *)
     func multiColorSymbolAttributedString(name: String) -> NSAttributedString {
         let symbolAttachment = NSTextAttachment()
         let palleteSymbolConfig = UIImage.SymbolConfiguration(paletteColors: [UIColor.systemOrange, UIColor.systemRed])
